@@ -1,0 +1,36 @@
+FROM mesaguy/gentoo-openrc-boot-x86_64:latest
+
+# Sync portage
+RUN mkdir -p /usr/portage/{distfiles,metadata,packages} && \
+chown -R portage:portage /usr/portage && \
+emerge-webrsync && \
+# Install sudo and openssh for kitchen
+emerge app-admin/sudo net-misc/openssh && \
+# Cleanup portage, downloaded source files and compile directories
+rm -rf /usr/portage /var/tmp/* && \
+# Purge logs
+rm -rf /var/log/*
+
+# Adjust sshd defaults per kitchen's needs
+RUN test -f /usr/lib64/misc/sftp-server && \
+printf "Subsystem sftp /usr/lib64/misc/sftp-server\nUseDNS no\nUsePAM no\nPasswordAuthentication yes\nUsePrivilegeSeparation no\n" > /etc/ssh/sshd_config && \
+# Start SSH on boot
+rc-update add sshd && \
+# Add 'kitchen' user
+if ! getent passwd kitchen; then useradd -d /home/kitchen -m -s /bin/bash -p '*' kitchen; fi && \
+# Allow unlimited sudo privileges to 'kitchen' user
+echo "kitchen ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers && echo "Defaults !requiretty" >> /etc/sudoers && \
+# Make 'kitchen' user's ~/.ssh directory
+mkdir -m 0700 -p /home/kitchen/.ssh && chown -R kitchen:kitchen /home/kitchen/.ssh
+# Copy Kitchen SSH key into environment
+ARG HOME
+COPY --chown=kitchen:kitchen kitchen_id_rsa.pub /home/kitchen/.ssh/authorized_keys
+
+# Expose SSH
+EXPOSE 22
+
+# Image metadata
+LABEL org.label-schema.vendor="MesaGuy" \
+      org.label-schema.name="Gentoo Linux openrc latest rolling-release kitchen-base" \
+      org.label-schema.description="Image boots Gentoo Linux's latest rolling-release via SysV init configured for kitchen testing" \
+      com.mesaguy.operatingsystem.eol="false"

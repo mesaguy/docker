@@ -1,0 +1,14 @@
+FROM mesaguy/opensuse-13.2-kitchen-base-x86_64:latest
+
+# Install puppet for kitchen
+RUN zypper --non-interactive install puppet && \
+# Clean (purge) the repo cache
+zypper --non-interactive clean --all && \
+# Purge logs
+rm -rf /var/log/* /var/run/log/journal
+
+# Image metadata
+LABEL org.label-schema.vendor="MesaGuy" \
+      org.label-schema.name="OpenSUSE Linux 13.2 kitchen-puppet" \
+      org.label-schema.description="Image boots OpenSUSE Linux 13.2 via systemd configured for kitchen puppet testing" \
+      com.mesaguy.operatingsystem.eol="true"

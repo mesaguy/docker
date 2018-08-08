@@ -1,0 +1,12 @@
+FROM mesaguy/amazonlinux-2-kitchen-base-x86_64:latest
+
+# Make a file to force new layer
+RUN touch /root/ANSIBLE && \
+# Purge logs
+rm -rf /var/log/*
+
+# Image metadata
+LABEL org.label-schema.vendor="MesaGuy" \
+      org.label-schema.name="Amazon Linux v2 kitchen-ansible" \
+      org.label-schema.description="Image boots Amazon Linux v2 via systemd configured for kitchen ansible testing" \
+      com.mesaguy.operatingsystem.eol="false"

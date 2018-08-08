@@ -1,0 +1,25 @@
+# Source (EOL)
+FROM oraclelinux:5.11
+
+# Clean (purge) the repo cache
+RUN yum -d1 -y clean all && \
+# Update all packages
+yum -d1 -y update && \
+# Install init scripts
+yum -d1 -y install initscripts && \
+# Clean (purge) the repo cache
+yum -d1 -y clean all && rm -rf /var/cache/yum/* && \
+# Purge logs
+rm -rf /var/log/*
+
+# Disable all services
+RUN rm /etc/rc.d/rc*.d/*
+
+# Start via init
+CMD ["/sbin/init"]
+
+# Image metadata
+LABEL org.label-schema.vendor="MesaGuy" \
+      org.label-schema.name="Oracle Linux 5.11 boot" \
+      org.label-schema.description="Image boots Oracle Linux 5.11 via SysV init" \
+      com.mesaguy.operatingsystem.eol="true"

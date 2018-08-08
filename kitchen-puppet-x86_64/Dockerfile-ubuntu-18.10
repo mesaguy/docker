@@ -1,0 +1,17 @@
+FROM mesaguy/ubuntu-18.10-kitchen-base-x86_64:latest
+
+# Update repo definitions
+RUN apt update && \
+# Install puppet for kitchen
+apt install -y puppet && \
+# Clean (purge) the repo cache
+apt-get clean && \
+rm -rf /var/lib/apt/lists/* && \
+# Purge logs
+rm -rf /var/log/*
+
+# Image metadata
+LABEL org.label-schema.vendor="MesaGuy" \
+      org.label-schema.name="Ubuntu Linux 18.10 (Cosmic Cuttlefish) kitchen-puppet" \
+      org.label-schema.description="Image boots Ubuntu Linux 18.10 (Cosmic Cuttlefish) via systemd configured for kitchen puppet testing" \
+      com.mesaguy.operatingsystem.eol="false"

@@ -1,0 +1,12 @@
+FROM mesaguy/centos-7.0-kitchen-base-x86_64:latest
+
+# Make a file to force new layer
+RUN touch /root/ANSIBLE && \
+# Purge logs
+rm -rf /var/log/* /var/run/log/journal
+
+# Image metadata
+LABEL org.label-schema.vendor="MesaGuy" \
+      org.label-schema.name="CentOS Linux 7.0 kitchen-ansible" \
+      org.label-schema.description="Image boots CentOS Linux 7.0 via SysV init configured for kitchen ansible testing" \
+      com.mesaguy.operatingsystem.eol="false"

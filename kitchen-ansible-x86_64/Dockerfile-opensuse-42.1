@@ -1,0 +1,12 @@
+FROM mesaguy/opensuse-42.1-kitchen-base-x86_64:latest
+
+# Make a file to force new layer
+RUN touch /root/ANSIBLE && \
+# Purge logs
+rm -rf /var/log/* /var/run/log/journal
+
+# Image metadata
+LABEL org.label-schema.vendor="MesaGuy" \
+      org.label-schema.name="OpenSUSE Linux 42.1 kitchen-ansible" \
+      org.label-schema.description="Image boots OpenSUSE Linux 42.1 via systemd configured for kitchen ansible testing" \
+      com.mesaguy.operatingsystem.eol="true"

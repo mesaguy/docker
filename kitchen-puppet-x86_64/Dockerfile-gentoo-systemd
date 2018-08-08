@@ -1,0 +1,22 @@
+FROM mesaguy/gentoo-systemd-kitchen-base-x86_64:latest
+
+# Sync portage
+RUN mkdir -p /usr/portage/{distfiles,metadata,packages} && \
+chown -R portage:portage /usr/portage && \
+emerge-webrsync && \
+# Specify ruby version
+echo 'RUBY_TARGETS="ruby23"' >> /etc/portage/make.conf && \
+# Set puppet options
+echo 'app-admin/puppet augeas shadow' >> /etc/portage/package.use/puppet && \
+# Install puppet for kitchen
+emerge puppet && \
+# Cleanup portage, downloaded source files and compile directories
+rm -rf /usr/portage /var/tmp/* && \
+# Purge logs
+rm -rf /var/log/*
+
+# Image metadata
+LABEL org.label-schema.vendor="MesaGuy" \
+      org.label-schema.name="Gentoo Linux systemd latest rolling-release kitchen-puppet" \
+      org.label-schema.description="Image boots Gentoo Linux's latest rolling-release via systemd configured for kitchen puppet testing" \
+      com.mesaguy.operatingsystem.eol="false"

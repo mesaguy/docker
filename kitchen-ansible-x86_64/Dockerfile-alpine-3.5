@@ -1,0 +1,16 @@
+FROM mesaguy/alpine-3.5-kitchen-base-x86_64:latest
+
+# Update repository information
+RUN apk update && \
+# Install python
+apk add python && \
+# Remove caches
+rm -f /var/cache/apk/* && \
+# Purge logs
+rm -rf /var/log/*
+
+# Image metadata
+LABEL org.label-schema.vendor="MesaGuy" \
+      org.label-schema.name="Alpine Linux 3.5 kitchen-ansible" \
+      org.label-schema.description="Image boots Alpine Linux 3.5 via OpenRC configured for kitchen ansible testing" \
+      com.mesaguy.operatingsystem.eol="true"

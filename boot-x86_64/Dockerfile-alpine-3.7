@@ -1,0 +1,28 @@
+# Source
+FROM alpine:3.7
+
+# Update repository information
+RUN apk update && \
+# Update all packages
+apk upgrade && \
+# Install openrc
+apk add openrc && \
+# Remove caches
+rm -f /var/cache/apk/* && \
+# Purge logs
+rm -rf /var/log/*
+
+# Disable ttys
+RUN sed -i 's/^tty/#tty/g' /etc/inittab
+
+# Needed by OpenRC
+VOLUME [ "/run" ]
+
+# Start via init
+CMD ["/sbin/init"]
+
+# Image metadata
+LABEL org.label-schema.vendor="MesaGuy" \
+      org.label-schema.name="Alpine Linux 3.7 boot" \
+      org.label-schema.description="Image boots Alpine Linux 3.7 via OpenRC" \
+      com.mesaguy.operatingsystem.eol="false"

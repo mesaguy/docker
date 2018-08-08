@@ -1,0 +1,17 @@
+FROM mesaguy/debian-9-kitchen-base-x86_64:latest
+
+# Update repo definitions
+RUN apt update && \
+# Install puppet for kitchen
+apt install -y puppet && \
+# Clean (purge) the repo cache
+apt-get clean && \
+rm -rf /var/lib/apt/lists/* && \
+# Purge logs
+rm -rf /var/log/*
+
+# Image metadata
+LABEL org.label-schema.vendor="MesaGuy" \
+      org.label-schema.name="Debian Linux 9 (Stretch) kitchen-puppet" \
+      org.label-schema.description="Image boots Debian Linux 9 (Stretch) via systemd configured for kitchen puppet testing" \
+      com.mesaguy.operatingsystem.eol="false"

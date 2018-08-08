@@ -1,0 +1,16 @@
+FROM mesaguy/archlinux-kitchen-base-x86_64:latest
+
+# Update repo definitions
+RUN pacman -Sy --noconfirm && \
+# Install puppet for kitchen
+pacman --noconfirm -S puppet && \
+# Clean (purge) the repo cache
+pacman --noconfirm -Scc && rm -rf /var/lib/pacman/sync/* && \
+# Purge logs
+rm -rf /var/log/* /var/run/log/journal
+
+# Image metadata
+LABEL org.label-schema.vendor="MesaGuy" \
+      org.label-schema.name="ArchLinux latest rolling-release kitchen-puppet" \
+      org.label-schema.description="Image boots ArchLinux's latest rolling-release via systemd configured for kitchen puppet testing" \
+      com.mesaguy.operatingsystem.eol="false"
