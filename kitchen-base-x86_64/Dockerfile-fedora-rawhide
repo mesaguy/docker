@@ -1,4 +1,4 @@
-FROM mesaguy/centos-6.9-boot-x86_64:latest
+FROM mesaguy/fedora-rawhide-boot-x86_64:latest
 
 # Clean (purge) the repo cache
 RUN yum -d1 -y clean all && \
@@ -7,13 +7,13 @@ yum install -y openssh-server sudo && \
 # Clean (purge) the repo cache
 yum -d1 -y clean all && rm -rf /var/cache/yum/* && \
 # Purge logs
-rm -rf /var/log/*
+rm -rf /var/log/* /var/run/log/journal
 
 # Adjust sshd defaults per kitchen's needs
 RUN test -f /usr/libexec/openssh/sftp-server && \
 printf "Subsystem sftp /usr/libexec/openssh/sftp-server\nUseDNS no\nUsePAM no\nPasswordAuthentication yes\nUsePrivilegeSeparation no\n" > /etc/ssh/sshd_config && \
 # Start SSH on boot
-chkconfig sshd on && \
+systemctl enable sshd.service && \
 # Add 'kitchen' user
 if ! getent passwd kitchen; then useradd -d /home/kitchen -m -s /bin/bash -p '*' kitchen; fi && \
 # Allow unlimited sudo privileges to 'kitchen' user
@@ -30,6 +30,6 @@ EXPOSE 22
 
 # Image metadata
 LABEL org.label-schema.vendor="MesaGuy" \
-      org.label-schema.name="CentOS Linux 6.9 kitchen-base" \
-      org.label-schema.description="Image boots CentOS Linux 6.9 via SysV init configured for kitchen testing" \
-      com.mesaguy.operatingsystem.eol="false"
+      org.label-schema.name="Fedora Linux rawhide kitchen-base" \
+      org.label-schema.description="Image boots Fedora Linux rawhide via systemd configured for kitchen testing" \
+      com.mesaguy.operatingsystem.eol="true"

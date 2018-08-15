@@ -1,9 +1,7 @@
-FROM mesaguy/fedora-20-kitchen-base-x86_64:latest
+FROM mesaguy/fedora-rawhide-kitchen-base-x86_64:latest
 
 # Clean (purge) the repo cache
 RUN yum -d1 -y clean all && \
-# Fix for https://bugzilla.redhat.com/show_bug.cgi?id=1213602
-touch /var/lib/rpm/* && \
 # Install puppet for kitchen
 yum install -y puppet && \
 # Clean (purge) the repo cache
@@ -13,6 +11,6 @@ rm -rf /var/log/* /var/run/log/journal
 
 # Image metadata
 LABEL org.label-schema.vendor="MesaGuy" \
-      org.label-schema.name="Fedora Linux 20 (Heisenbug) kitchen-puppet" \
-      org.label-schema.description="Image boots Fedora Linux 20 (Heisenbug) via systemd configured for kitchen puppet testing" \
+      org.label-schema.name="Fedora Linux rawhide kitchen-puppet" \
+      org.label-schema.description="Image boots Fedora Linux rawhide via systemd configured for kitchen puppet testing" \
       com.mesaguy.operatingsystem.eol="true"

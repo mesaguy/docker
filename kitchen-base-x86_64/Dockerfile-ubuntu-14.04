@@ -24,6 +24,7 @@ mkdir -m 0700 -p /home/kitchen/.ssh && chown -R kitchen:kitchen /home/kitchen/.s
 # Copy Kitchen SSH key into environment
 ARG HOME
 COPY --chown=kitchen:kitchen kitchen_id_rsa.pub /home/kitchen/.ssh/authorized_keys
+RUN chmod 0600 /home/kitchen/.ssh/authorized_keys
 
 # Expose SSH
 EXPOSE 22

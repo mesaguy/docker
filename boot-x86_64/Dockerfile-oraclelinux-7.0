@@ -2,9 +2,9 @@
 FROM oraclelinux:7.0
 
 # Clean (purge) the repo cache
-RUN yum -d1 -y clean all && \
+RUN yum -d1 -y clean all && rm -rf /var/cache/yum/* && \
 # Upgrade buggy yum:
-yum -d1 -y update yum && yum -d1 -y clean all && \
+yum -d1 -y install yum-plugin-ovl || true && \
 # Install systemctl
 yum -d1 -y install systemd systemd-libs dbus fsck.ext4 yum-plugin-ovl && \
 # Clean (purge) the repo cache

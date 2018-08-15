@@ -1,4 +1,4 @@
-FROM mesaguy/centos-6.9-boot-x86_64:latest
+FROM mesaguy/oraclelinux-6.10-boot-x86_64:latest
 
 # Clean (purge) the repo cache
 RUN yum -d1 -y clean all && \
@@ -30,6 +30,6 @@ EXPOSE 22
 
 # Image metadata
 LABEL org.label-schema.vendor="MesaGuy" \
-      org.label-schema.name="CentOS Linux 6.9 kitchen-base" \
-      org.label-schema.description="Image boots CentOS Linux 6.9 via SysV init configured for kitchen testing" \
+      org.label-schema.name="Oracle Linux Linux 6.10 kitchen-base" \
+      org.label-schema.description="Image boots Oracle Linux Linux 6.10 via SysV init configured for kitchen testing" \
       com.mesaguy.operatingsystem.eol="false"
