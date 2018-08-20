@@ -1,13 +1,9 @@
-FROM mesaguy/alpine-2.7-kitchen-base-x86_64:latest
+FROM mesaguy/fedora-21-kitchen-base-x86_64:latest
 
-# Update repository information
-RUN apk update && \
-# Install python
-apk add python && \
-# Remove caches
-rm -f /var/cache/apk/* && \
+# Make a file to force new layer
+RUN touch /root/ANSIBLE && \
 # Purge logs
-rm -rf /var/log/*
+rm -rf /var/log/* /var/run/log/journal
 
 # Add your specific Ansible SSH public key. This only works when run via
 # kitchen, when run with the following options in your .kitchen.yml file:
@@ -22,6 +18,6 @@ chmod 0600 /home/kitchen/.ssh/authorized_keys
 
 # Image metadata
 LABEL org.label-schema.vendor="MesaGuy" \
-      org.label-schema.name="Alpine Linux 2.7 kitchen-ansible" \
-      org.label-schema.description="Image boots Alpine Linux 2.7 via OpenRC configured for kitchen ansible testing" \
+      org.label-schema.name="Fedora Linux 21 kitchen-ansible" \
+      org.label-schema.description="Image boots Fedora Linux 21 via systemd configured for kitchen ansible testing" \
       com.mesaguy.operatingsystem.eol="true"

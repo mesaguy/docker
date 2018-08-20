@@ -1,13 +1,7 @@
-FROM mesaguy/alpine-3.1-kitchen-base-x86_64:latest
+FROM mesaguy/oraclelinux-6.8-kitchen-base-x86_64:latest
 
-# Add edge community repository (for shadow)
-RUN echo http://dl-2.alpinelinux.org/alpine/edge/community/ >> /etc/apk/repositories && \
-# Update repository information
-apk update && \
-# Install python and shadow
-apk add python shadow && \
-# Remove caches
-rm -f /var/cache/apk/* && \
+# Make a file to force new layer
+RUN touch /root/ANSIBLE && \
 # Purge logs
 rm -rf /var/log/*
 
@@ -24,6 +18,6 @@ chmod 0600 /home/kitchen/.ssh/authorized_keys
 
 # Image metadata
 LABEL org.label-schema.vendor="MesaGuy" \
-      org.label-schema.name="Alpine Linux 3.1 kitchen-ansible" \
-      org.label-schema.description="Image boots Alpine Linux 3.1 via OpenRC configured for kitchen ansible testing" \
+      org.label-schema.name="Oracle Linux Linux 6.8 kitchen-ansible" \
+      org.label-schema.description="Image boots Oracle Linux Linux 6.8 via SysV init configured for kitchen ansible testing" \
       com.mesaguy.operatingsystem.eol="true"
