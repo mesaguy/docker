@@ -22,10 +22,6 @@ sed -i 's/kitchen:!/kitchen:/g' /etc/shadow && \
 echo "kitchen ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers && echo "Defaults !requiretty" >> /etc/sudoers && \
 # Make 'kitchen' user's ~/.ssh directory
 mkdir -m 0700 -p /home/kitchen/.ssh && chown -R kitchen:kitchen /home/kitchen/.ssh
-# Copy Kitchen SSH key into environment
-ARG HOME
-COPY --chown=kitchen:kitchen kitchen_id_rsa.pub /home/kitchen/.ssh/authorized_keys
-RUN chmod 0600 /home/kitchen/.ssh/authorized_keys
 
 # Expose SSH
 EXPOSE 22
@@ -34,4 +30,4 @@ EXPOSE 22
 LABEL org.label-schema.vendor="MesaGuy" \
       org.label-schema.name="Alpine Linux 3.7 kitchen-base" \
       org.label-schema.description="Image boots Alpine Linux 3.7 via OpenRC configured for kitchen testing" \
-      com.mesaguy.operatingsystem.eol="true"
+      com.mesaguy.operatingsystem.eol="false"

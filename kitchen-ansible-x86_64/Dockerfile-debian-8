@@ -3,12 +3,23 @@ FROM mesaguy/debian-8-kitchen-base-x86_64:latest
 # Update repo definitions
 RUN apt update && \
 # Install python for ansible
-apt install -y python && \
+apt install -y apt-utils python python-apt && \
 # Clean (purge) the repo cache
 apt-get clean && \
 rm -rf /var/lib/apt/lists/* && \
 # Purge logs
 rm -rf /var/log/*
+
+# Add your specific Ansible SSH public key. This only works when run via
+# kitchen, when run with the following options in your .kitchen.yml file:
+#
+#    driver_config:
+#      build_options:
+#        build-arg: SSH_KEY=<%= File.read('.kitchen/docker_id_rsa.pub') %>
+#
+ARG SSH_KEY
+RUN echo "$SSH_KEY" >> /home/kitchen/.ssh/authorized_keys && \
+chmod 0600 /home/kitchen/.ssh/authorized_keys
 
 # Image metadata
 LABEL org.label-schema.vendor="MesaGuy" \

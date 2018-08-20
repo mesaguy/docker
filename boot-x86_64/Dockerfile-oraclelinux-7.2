@@ -1,0 +1,41 @@
+# Source (EOL)
+FROM oraclelinux:7.2
+
+# Clean (purge) the repo cache
+RUN yum -d1 -y clean all && rm -rf /var/cache/yum/* && \
+# Upgrade buggy yum:
+yum -d1 -y install yum-plugin-ovl || true && \
+# Re-purge cache
+yum -d1 -y clean all && \
+# Install systemctl
+yum -d1 -y install systemd systemd-libs dbus fsck.ext4 && \
+# Clean (purge) the repo cache
+yum -d1 -y clean all && rm -rf /var/cache/yum/* && \
+# Purge logs
+rm -rf /var/log/* /var/run/log/journal
+
+# Strip down systemd
+RUN (cd /lib/systemd/system/sysinit.target.wants && for i in *; do [ $i == systemd-tmpfiles-setup.service ] || rm -f $i; done) && \
+rm -f /lib/systemd/system/multi-user.target.wants/* && \
+rm -f /etc/systemd/system/*.wants/* && \
+rm -f /lib/systemd/system/local-fs.target.wants/* && \
+rm -f /lib/systemd/system/sockets.target.wants/*udev* && \
+rm -f /lib/systemd/system/sockets.target.wants/*initctl* && \
+rm -f /lib/systemd/system/basic.target.wants/* && \
+rm -f /lib/systemd/system/anaconda.target.wants/*
+
+# Without this, init won't start the enabled services. Starting the services
+# fails with one of:
+#     Failed to get D-Bus connection: Operation not permitted
+#     System has not been booted with systemd as init system (PID 1). Can't operate.
+#     Failed to connect to bus: No such file or directory
+VOLUME [ "/sys/fs/cgroup", "/run" ]
+
+# Start via systemd
+CMD ["/usr/lib/systemd/systemd"]
+
+# Image metadata
+LABEL org.label-schema.vendor="MesaGuy" \
+      org.label-schema.name="Oracle Linux 7.2 boot" \
+      org.label-schema.description="Image boots Oracle Linux 7.2 via systemd" \
+      com.mesaguy.operatingsystem.eol="true"

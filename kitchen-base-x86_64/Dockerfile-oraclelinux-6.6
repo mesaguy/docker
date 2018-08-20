@@ -20,10 +20,6 @@ if ! getent passwd kitchen; then useradd -d /home/kitchen -m -s /bin/bash -p '*'
 echo "kitchen ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers && echo "Defaults !requiretty" >> /etc/sudoers && \
 # Make 'kitchen' user's ~/.ssh directory
 mkdir -m 0700 -p /home/kitchen/.ssh && chown -R kitchen:kitchen /home/kitchen/.ssh
-# Copy Kitchen SSH key into environment
-ARG HOME
-COPY --chown=kitchen:kitchen kitchen_id_rsa.pub /home/kitchen/.ssh/authorized_keys
-RUN chmod 0600 /home/kitchen/.ssh/authorized_keys
 
 # Expose SSH
 EXPOSE 22
@@ -32,4 +28,4 @@ EXPOSE 22
 LABEL org.label-schema.vendor="MesaGuy" \
       org.label-schema.name="Oracle Linux Linux 6.6 kitchen-base" \
       org.label-schema.description="Image boots Oracle Linux Linux 6.6 via SysV init configured for kitchen testing" \
-      com.mesaguy.operatingsystem.eol="false"
+      com.mesaguy.operatingsystem.eol="true"
