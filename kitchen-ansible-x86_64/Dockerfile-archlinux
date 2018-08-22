@@ -17,8 +17,7 @@ rm -rf /var/log/* /var/run/log/journal
 #        build-arg: SSH_KEY=<%= File.read('.kitchen/docker_id_rsa.pub') %>
 #
 ARG SSH_KEY
-RUN echo "$SSH_KEY" >> /home/kitchen/.ssh/authorized_keys && \
-chmod 0600 /home/kitchen/.ssh/authorized_keys
+RUN echo "$SSH_KEY" >> /home/kitchen/.ssh/authorized_keys
 
 # Image metadata
 LABEL org.label-schema.vendor="MesaGuy" \
