@@ -20,10 +20,17 @@ if ! getent passwd kitchen; then useradd -d /home/kitchen -m -s /bin/bash -p '*'
 # Allow unlimited sudo privileges to 'kitchen' user
 echo "kitchen ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers && echo "Defaults !requiretty" >> /etc/sudoers && \
 # Make 'kitchen' user's ~/.ssh directory
-mkdir -m 0700 -p /home/kitchen/.ssh && chown -R kitchen:kitchen /home/kitchen/.ssh
-# Copy Kitchen SSH key into environment
-ARG HOME
-COPY --chown=kitchen:kitchen kitchen_id_rsa.pub /home/kitchen/.ssh/authorized_keys
+mkdir -m 0700 -p /home/kitchen/.ssh && \
+# Make 'kitchen' user's authorized_keys file (empty)
+touch /home/kitchen/.ssh/authorized_keys && \
+# Secure 'kitchen' user's authorized_keys file
+chmod 0600 /home/kitchen/.ssh/authorized_keys && \
+# Fix 'kitchen' user's SSH directory permissions
+chown -R kitchen:kitchen /home/kitchen/.ssh
+
+# Give Debian 10 (buster) a release number such that Inspec's service module
+# works correctly
+RUN if grep -q 'buster/sid' /etc/debian_version ; then echo 10 > /etc/debian_version; fi
 
 # Expose SSH
 EXPOSE 22

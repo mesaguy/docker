@@ -1,12 +1,17 @@
 FROM mesaguy/centos-6.9-kitchen-base-x86_64:latest
 
-# Make a file to force new layer
-RUN touch /root/ANSIBLE && \
-# Purge logs
-rm -rf /var/log/*
+# Add your specific Ansible SSH public key. This only works when run via
+# kitchen, when run with the following options in your .kitchen.yml file:
+#
+#    driver_config:
+#      build_options:
+#        build-arg: SSH_KEY=<%= File.read('.kitchen/docker_id_rsa.pub') %>
+#
+ARG SSH_KEY
+RUN echo "$SSH_KEY" >> /home/kitchen/.ssh/authorized_keys
 
 # Image metadata
 LABEL org.label-schema.vendor="MesaGuy" \
       org.label-schema.name="CentOS Linux 6.9 kitchen-ansible" \
       org.label-schema.description="Image boots CentOS Linux 6.9 via SysV init configured for kitchen ansible testing" \
-      com.mesaguy.operatingsystem.eol="false"
+      com.mesaguy.operatingsystem.eol="true"

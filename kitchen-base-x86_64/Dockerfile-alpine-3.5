@@ -16,13 +16,18 @@ printf "Subsystem sftp /usr/lib/ssh/sftp-server\nUseDNS no\nUsePAM no\nPasswordA
 rc-update add sshd && \
 # Add 'kitchen' user
 if ! getent passwd kitchen; then adduser -h /home/kitchen -s /bin/bash -D kitchen; fi && \
+# Ensure 'kitchen' user account is not locked out
+sed -i 's/kitchen:!/kitchen:/g' /etc/shadow && \
 # Allow unlimited sudo privileges to 'kitchen' user
 echo "kitchen ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers && echo "Defaults !requiretty" >> /etc/sudoers && \
 # Make 'kitchen' user's ~/.ssh directory
-mkdir -m 0700 -p /home/kitchen/.ssh && chown -R kitchen:kitchen /home/kitchen/.ssh
-# Copy Kitchen SSH key into environment
-ARG HOME
-COPY --chown=kitchen:kitchen kitchen_id_rsa.pub /home/kitchen/.ssh/authorized_keys
+mkdir -m 0700 -p /home/kitchen/.ssh && \
+# Make 'kitchen' user's authorized_keys file (empty)
+touch /home/kitchen/.ssh/authorized_keys && \
+# Secure 'kitchen' user's authorized_keys file
+chmod 0600 /home/kitchen/.ssh/authorized_keys && \
+# Fix 'kitchen' user's SSH directory permissions
+chown -R kitchen:kitchen /home/kitchen/.ssh
 
 # Expose SSH
 EXPOSE 22
@@ -31,4 +36,4 @@ EXPOSE 22
 LABEL org.label-schema.vendor="MesaGuy" \
       org.label-schema.name="Alpine Linux 3.5 kitchen-base" \
       org.label-schema.description="Image boots Alpine Linux 3.5 via OpenRC configured for kitchen testing" \
-      com.mesaguy.operatingsystem.eol="true"
+      com.mesaguy.operatingsystem.eol="false"

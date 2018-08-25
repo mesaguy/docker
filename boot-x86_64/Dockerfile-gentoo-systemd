@@ -9,13 +9,11 @@ emerge-webrsync && \
 # Enable systemd
 eselect profile set "default/linux/amd64/17.0/systemd" && \
 # 20180705 causes build problems for libcap
-echo "=dev-util/gperf-3.1" >> /etc/portage/package.mask/libcap && \
-# Uninstall udev
-emerge --unmerge dev-util/gperf sys-fs/eudev virtual/udev && \
+#echo "=dev-util/gperf-3.1" >> /etc/portage/package.mask/libcap && \
+# Uninstall udev and sysvinit
+emerge --unmerge dev-util/gperf sys-apps/sysvinit sys-fs/eudev virtual/udev && \
 # Install base packages
 emerge app-portage/gentoolkit && \
-# Uninstall sysvinit
-emerge --unmerge sys-apps/sysvinit && \
 # Install systemd
 emerge sys-apps/systemd && \
 # Cleanup portage, downloaded source files and compile directories

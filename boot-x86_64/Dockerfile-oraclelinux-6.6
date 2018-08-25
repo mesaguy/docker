@@ -2,9 +2,9 @@
 FROM oraclelinux:6.6
 
 # Clean (purge) the repo cache
-RUN yum -d1 -y clean all && \
+RUN yum -d1 -y clean all && rm -rf /var/cache/yum/* && \
 # Upgrade buggy yum:
-yum -d1 -y install yum-plugin-ovl && \
+yum -d1 -y install yum-plugin-ovl || true && \
 yum -d1 -y update yum && \
 # Clean (purge) the repo cache
 yum -d1 -y clean all && rm -rf /var/cache/yum/* && \
