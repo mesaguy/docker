@@ -28,6 +28,10 @@ chmod 0600 /home/kitchen/.ssh/authorized_keys && \
 # Fix 'kitchen' user's SSH directory permissions
 chown -R kitchen:kitchen /home/kitchen/.ssh
 
+# Give Debian 10 (buster) a release number such that Inspec's service module
+# works correctly
+RUN if grep -q 'buster/sid' /etc/debian_version ; then echo 10 > /etc/debian_version; fi
+
 # Expose SSH
 EXPOSE 22
 

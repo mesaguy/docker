@@ -5,6 +5,8 @@ FROM fedora:20
 RUN yum -d1 -y clean all && \
 # Fix for https://bugzilla.redhat.com/show_bug.cgi?id=1213602
 touch /var/lib/rpm/* && \
+# Update all patches
+yum -d1 -y update yum && \
 # Install systemctl
 yum -d1 -y install systemd systemd-libs dbus && \
 # Clean (purge) the repo cache
