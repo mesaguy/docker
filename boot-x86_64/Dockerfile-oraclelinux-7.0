@@ -3,26 +3,27 @@ FROM oraclelinux:7.0
 
 # Clean (purge) the repo cache
 RUN yum -d1 -y clean all && rm -rf /var/cache/yum/* && \
-# Upgrade buggy yum:
+# Install docker OverlayFS plugin for yum:
 yum -d1 -y install yum-plugin-ovl || true && \
 # Re-purge cache
 yum -d1 -y clean all && \
 # Install systemctl
 yum -d1 -y install systemd systemd-libs dbus fsck.ext4 && \
-# Clean (purge) the repo cache
-yum -d1 -y clean all && rm -rf /var/cache/yum/* && \
-# Purge logs
-rm -rf /var/log/* /var/run/log/journal
-
+# Update select packages to allow git to reach https sites
+yum -d1 -y update nss curl libcurl && \
 # Strip down systemd
-RUN (cd /lib/systemd/system/sysinit.target.wants && for i in *; do [ $i == systemd-tmpfiles-setup.service ] || rm -f $i; done) && \
+(cd /lib/systemd/system/sysinit.target.wants && for i in *; do [ $i == systemd-tmpfiles-setup.service ] || rm -f $i; done) && \
 rm -f /lib/systemd/system/multi-user.target.wants/* && \
 rm -f /etc/systemd/system/*.wants/* && \
 rm -f /lib/systemd/system/local-fs.target.wants/* && \
 rm -f /lib/systemd/system/sockets.target.wants/*udev* && \
 rm -f /lib/systemd/system/sockets.target.wants/*initctl* && \
 rm -f /lib/systemd/system/basic.target.wants/* && \
-rm -f /lib/systemd/system/anaconda.target.wants/*
+rm -f /lib/systemd/system/anaconda.target.wants/* && \
+# Clean (purge) the repo cache
+yum -d1 -y clean all && rm -rf /var/cache/yum/* && \
+# Purge logs
+rm -rf /var/log/* /var/run/log/journal
 
 # Without this, init won't start the enabled services. Starting the services
 # fails with one of:

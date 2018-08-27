@@ -11,11 +11,10 @@ apk add openrc && \
 rm -f /var/cache/apk/* && \
 # Setup compatibility with libc
 mkdir -p /lib64 && ln -s /lib/libc.musl-x86_64.so.1 /lib64/ld-linux-x86-64.so.2 && \
+# Disable ttys
+sed -i 's/^tty/#tty/g' /etc/inittab && \
 # Purge logs
 rm -rf /var/log/*
-
-# Disable ttys
-RUN sed -i 's/^tty/#tty/g' /etc/inittab
 
 # Needed by OpenRC
 VOLUME [ "/run" ]

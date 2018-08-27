@@ -3,18 +3,22 @@ FROM centos:6.7
 
 # Clean (purge) the repo cache
 RUN yum -d1 -y clean all && rm -rf /var/cache/yum/* && \
-# Upgrade buggy yum:
+# Install docker OverlayFS plugin for yum:
 yum -d1 -y install yum-plugin-ovl || true && \
+# Update all packages
 yum -d1 -y update yum && \
-# Install upstart
-yum -d1 -y install upstart && \
+# Install init scripts
+yum -d1 -y install initscripts && \
+# Disable all services
+rm /etc/rc.d/rc*.d/* && \
+# Disable ttys
+mv /etc/init/serial.conf /etc/init/serial.conf.disabled && \
+mv /etc/init/tty.conf /etc/init/tty.conf.disabled && \
+mv /etc/init/start-ttys.conf /etc/init/start-ttys.conf.disabled && \
 # Clean (purge) the repo cache
 yum -d1 -y clean all && rm -rf /var/cache/yum/* && \
 # Purge logs
 rm -rf /var/log/*
-
-# Disable all services
-RUN rm -f /etc/rc.d/rc*.d/*
 
 # Start via init
 CMD ["/sbin/init"]

@@ -36,20 +36,19 @@ rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-fedora-30-primary
 RUN dnf -y clean all && \
 # Update all packages
 dnf -y update && \
-# Clean (purge) the repo cache
-dnf -y clean all && rm -rf /var/cache/dnf/* /var/cache/yum/* && \
-# Purge logs
-rm -rf /var/log/* /var/run/log/journal
-
 # Strip down systemd
-RUN (cd /lib/systemd/system/sysinit.target.wants && for i in *; do [ $i == systemd-tmpfiles-setup.service ] || rm -f $i; done) && \
+(cd /lib/systemd/system/sysinit.target.wants && for i in *; do [ $i == systemd-tmpfiles-setup.service ] || rm -f $i; done) && \
 rm -f /lib/systemd/system/multi-user.target.wants/* && \
 rm -f /etc/systemd/system/*.wants/* && \
 rm -f /lib/systemd/system/local-fs.target.wants/* && \
 rm -f /lib/systemd/system/sockets.target.wants/*udev* && \
 rm -f /lib/systemd/system/sockets.target.wants/*initctl* && \
 rm -f /lib/systemd/system/basic.target.wants/* && \
-rm -f /lib/systemd/system/anaconda.target.wants/*
+rm -f /lib/systemd/system/anaconda.target.wants/* && \
+# Clean (purge) the repo cache
+dnf -y clean all && rm -rf /var/cache/dnf/* /var/cache/yum/* && \
+# Purge logs
+rm -rf /var/log/* /var/run/log/journal
 
 # Without this, init won't start the enabled services. Starting the services
 # fails with one of:

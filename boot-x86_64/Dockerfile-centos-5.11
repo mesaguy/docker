@@ -12,15 +12,14 @@ RUN yum -d1 -y clean all && \
 yum -d1 -y update && \
 # Install init scripts
 yum -d1 -y install initscripts && \
+# Disable all services
+rm /etc/rc.d/rc*.d/* && \
 # Install wget
 yum -d1 -y install wget && \
 # Clean (purge) the repo cache
 yum -d1 -y clean all && rm -rf /var/cache/yum/* && \
 # Purge logs
 rm -rf /var/log/*
-
-# Disable all services
-RUN rm /etc/rc.d/rc*.d/*
 
 # Start via init
 CMD ["/sbin/init"]
