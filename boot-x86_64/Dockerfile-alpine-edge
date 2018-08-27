@@ -7,13 +7,12 @@ RUN apk update && \
 apk upgrade && \
 # Install openrc
 apk add openrc && \
+# Disable ttys
+sed -i 's/^tty/#tty/g' /etc/inittab && \
 # Remove caches
 rm -f /var/cache/apk/* && \
 # Purge logs
 rm -rf /var/log/*
-
-# Disable ttys
-RUN sed -i 's/^tty/#tty/g' /etc/inittab
 
 # Needed by OpenRC
 VOLUME [ "/run" ]

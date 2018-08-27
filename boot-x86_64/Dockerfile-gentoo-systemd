@@ -16,16 +16,14 @@ emerge --unmerge dev-util/gperf sys-apps/sysvinit sys-fs/eudev virtual/udev && \
 emerge app-portage/gentoolkit && \
 # Install systemd
 emerge sys-apps/systemd && \
+# Setup systemd
+systemd-machine-id-setup && \
+# Strip down systemd
+rm -f /etc/systemd/system/*.wants/* && \
 # Cleanup portage, downloaded source files and compile directories
 rm -rf /usr/portage /var/tmp/* && \
 # Purge logs
 rm -rf /var/log/* /var/run/log/journal/*
-
-# Setup systemd
-RUN systemd-machine-id-setup
-
-# Strip down systemd
-RUN rm -f /etc/systemd/system/*.wants/*
 
 # Without this, init won't start the enabled services. Starting the services
 # fails with one of:

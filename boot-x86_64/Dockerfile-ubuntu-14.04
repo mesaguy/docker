@@ -5,6 +5,8 @@ FROM ubuntu-upstart:14.04
 RUN apt update && \
 # Upgrade all packages
 apt dist-upgrade -y && \
+# Remove udev and tty startups
+rm -f /etc/init.d/console-setup /etc/init.d/udev && \
 # Clean (purge) the repo cache
 apt-get clean && \
 rm -rf /var/lib/apt/lists/* && \

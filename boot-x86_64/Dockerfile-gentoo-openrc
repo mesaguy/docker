@@ -7,13 +7,8 @@ chown -R portage:portage /usr/portage && \
 emerge-webrsync && \
 # Add required base packages
 emerge app-portage/gentoolkit && \
-# Cleanup portage, downloaded source files and compile directories
-rm -rf /usr/portage /var/tmp/* && \
-# Purge logs
-rm -rf /var/log/*
-
 # Tell openrc loopback and net are already there, since docker handles the networking
-RUN echo 'rc_provide="loopback net"' >> /etc/rc.conf && \
+echo 'rc_provide="loopback net"' >> /etc/rc.conf && \
 # Can't get ttys unless you run the container in privileged mode
 sed -i '/tty/d' /etc/inittab && \
 # Can't set hostname since docker sets it
@@ -25,17 +20,14 @@ sed -i 's/cgroup_add_service /# cgroup_add_service /g' /lib/rc/sh/openrc-run.sh 
 # Disable services
 rc-update delete loopback boot && \
 rc-update delete netmount default && \
+# Remove troublesome and worthless start scripts
+rm -f /etc/init.d/bootmisc /etc/init.d/udev-settle /etc/init.d/udev /etc/init.d/udev-trigger /run/openrc && \
+mkdir -p /run/openrc && \
+echo "default" > /run/openrc/softlevel && \
+# Cleanup portage, downloaded source files and compile directories
+rm -rf /usr/portage /var/tmp/* && \
 # Purge logs
 rm -rf /var/log/*
-
-# Remove troublesome and worthless start scripts
-RUN rm -f /etc/init.d/bootmisc \
-/etc/init.d/udev-settle \
-/etc/init.d/udev \
-/etc/init.d/udev-trigger \
-/run/openrc && \
-mkdir -p /run/openrc && \
-echo "default" > /run/openrc/softlevel
 
 # Start via init
 CMD ["/sbin/init"]

@@ -5,6 +5,8 @@ FROM debian:7
 RUN apt-get update && \
 # Upgrade all packages
 apt-get dist-upgrade -y && \
+# Disable tty's
+sed -iE '/[0-9]+:.*tty[0-9]+/d' /etc/inittab && \
 # Clean (purge) the repo cache
 apt-get clean && \
 rm -rf /var/lib/apt/lists/* && \
