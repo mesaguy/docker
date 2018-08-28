@@ -1,7 +1,7 @@
 # Bootable docker images
 
 ## Purpose of images
-This is a collection of bootable docker images. These Docker images are intended for use when running tests against numerous Linux distributions. For instance, these images can be utilized by (Rspec)[http://rspec.info], (Serverspec)[http://serverspec.org], and (Inspec)[https://www.inspec.io] tests. These Docker images should not be used to deploy applications or be used in any form of production capacity.
+This is a collection of bootable docker images. These Docker images are intended for use when running tests against numerous Linux distributions. For instance, these images can be utilized by (Rspec)[http://rspec.info], (Serverspec)[https://serverspec.org/], and (Inspec)[https://www.inspec.io] tests. These Docker images should not be used to deploy applications or be used in any form of production capacity.
 
 
 # EOL (End Of Life) URLs
