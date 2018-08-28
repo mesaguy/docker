@@ -2,7 +2,7 @@
 FROM gentoo/stage3-amd64:latest
 
 # Sync portage
-RUN mkdir -p /usr/portage/{distfiles,metadata,packages} && \
+RUN mkdir -p /usr/portage/distfiles /usr/portage/metadata /usr/portage/packages && \
 chown -R portage:portage /usr/portage && \
 echo "masters = gentoo" > /usr/portage/metadata/layout.conf && \
 emerge-webrsync && \
@@ -36,7 +36,7 @@ VOLUME [ "/sys/fs/cgroup", "/run" ]
 CMD ["/usr/lib64/systemd/systemd"]
 
 # Image metadata
-LABEL org.label-schema.vendor="MesaGuy" \
+LABEL org.label-schema.vendor="Mesaguy" \
       org.label-schema.name="Gentoo Linux latest rolling-release boot" \
       org.label-schema.description="Image boots Gentoo Linux's latest rolling-release via systemd" \
       com.mesaguy.operatingsystem.eol="false"

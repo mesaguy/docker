@@ -2,27 +2,13 @@ FROM mesaguy/alpine-3.5-kitchen-base-x86_64:latest
 
 # Add edge community repository (for shadow)
 RUN echo http://dl-2.alpinelinux.org/alpine/edge/community/ >> /etc/apk/repositories && \
-# Update repository information
-apk update && \
-# Install python and shadow
-apk add python shadow && \
-# Remove caches
-rm -f /var/cache/apk/* && \
+# Install python and shadow (user and group management)
+apk add --no-cache python shadow && \
 # Purge logs
 rm -rf /var/log/*
 
-# Add your specific Ansible SSH public key. This only works when run via
-# kitchen, when run with the following options in your .kitchen.yml file:
-#
-#    driver_config:
-#      build_options:
-#        build-arg: SSH_KEY=<%= File.read('.kitchen/docker_id_rsa.pub') %>
-#
-ARG SSH_KEY
-RUN echo "$SSH_KEY" >> /home/kitchen/.ssh/authorized_keys
-
 # Image metadata
-LABEL org.label-schema.vendor="MesaGuy" \
+LABEL org.label-schema.vendor="Mesaguy" \
       org.label-schema.name="Alpine Linux 3.5 kitchen-ansible" \
       org.label-schema.description="Image boots Alpine Linux 3.5 via OpenRC configured for kitchen ansible testing" \
       com.mesaguy.operatingsystem.eol="false"

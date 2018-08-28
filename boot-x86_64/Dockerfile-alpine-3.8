@@ -1,16 +1,10 @@
 # Source
 FROM alpine:3.8
 
-# Update repository information
-RUN apk update && \
-# Update all packages
-apk upgrade && \
 # Install openrc
-apk add openrc && \
+RUN apk --no-cache add openrc && \
 # Disable ttys
 sed -i 's/^tty/#tty/g' /etc/inittab && \
-# Remove caches
-rm -f /var/cache/apk/* && \
 # Purge logs
 rm -rf /var/log/*
 
@@ -21,7 +15,7 @@ VOLUME [ "/run" ]
 CMD ["/sbin/init"]
 
 # Image metadata
-LABEL org.label-schema.vendor="MesaGuy" \
+LABEL org.label-schema.vendor="Mesaguy" \
       org.label-schema.name="Alpine Linux 3.8 boot" \
       org.label-schema.description="Image boots Alpine Linux 3.8 via OpenRC" \
       com.mesaguy.operatingsystem.eol="false"

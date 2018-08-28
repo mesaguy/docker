@@ -11,7 +11,7 @@ rm -rf /var/log/* /var/run/log/journal
 
 # Adjust sshd defaults per kitchen's needs
 RUN test -f /usr/libexec/openssh/sftp-server && \
-printf "Subsystem sftp /usr/libexec/openssh/sftp-server\nUseDNS no\nUsePAM no\nPasswordAuthentication yes\nUsePrivilegeSeparation no\n" > /etc/ssh/sshd_config && \
+printf "Subsystem sftp /usr/libexec/openssh/sftp-server\\nUseDNS no\\nUsePAM no\\nPasswordAuthentication yes\\nUsePrivilegeSeparation no\\n" > /etc/ssh/sshd_config && \
 # Start SSH on boot
 systemctl enable sshd.service && \
 # Add 'kitchen' user
@@ -19,7 +19,7 @@ if ! getent passwd kitchen; then useradd -d /home/kitchen -m -s /bin/bash -p '*'
 # Allow unlimited sudo privileges to 'kitchen' user
 echo "kitchen ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers && echo "Defaults !requiretty" >> /etc/sudoers && \
 # Make 'kitchen' user's ~/.ssh directory
-mkdir -m 0700 -p /home/kitchen/.ssh && \
+mkdir -m 0700 /home/kitchen/.ssh && \
 # Make 'kitchen' user's authorized_keys file (empty)
 touch /home/kitchen/.ssh/authorized_keys && \
 # Secure 'kitchen' user's authorized_keys file
@@ -31,7 +31,7 @@ chown -R kitchen:kitchen /home/kitchen/.ssh
 EXPOSE 22
 
 # Image metadata
-LABEL org.label-schema.vendor="MesaGuy" \
+LABEL org.label-schema.vendor="Mesaguy" \
       org.label-schema.name="Fedora Linux rawhide kitchen-base" \
       org.label-schema.description="Image boots Fedora Linux rawhide via systemd configured for kitchen testing" \
       com.mesaguy.operatingsystem.eol="false"

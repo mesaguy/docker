@@ -8,7 +8,7 @@ zypper --non-interactive install openSUSE-release && \
 # Install systemd libraries && \
 zypper --non-interactive install dbus-1 systemd-sysvinit && \
 # Strip down systemd
-(cd /usr/lib/systemd/system/sysinit.target.wants && for i in *; do [ $i == systemd-tmpfiles-setup.service ] || rm -f $i; done) && \
+find /usr/lib/systemd/system/sysinit.target.wants -type l ! -name systemd-tmpfiles-setup.service -delete && \
 rm -f /usr/lib/systemd/system/multi-user.target.wants/* && \
 rm -f /etc/systemd/system/*.wants/* && \
 rm -f /usr/lib/systemd/system/local-fs.target.wants/* && \
@@ -39,7 +39,7 @@ sed -i 's/OOMScoreAdjust=-900//' /etc/systemd/system/dbus.service
 CMD ["/usr/lib/systemd/systemd"]
 
 # Image metadata
-LABEL org.label-schema.vendor="MesaGuy" \
+LABEL org.label-schema.vendor="Mesaguy" \
       org.label-schema.name="OpenSUSE Linux 42.3 boot" \
       org.label-schema.description="Image boots OpenSUSE Linux 42.3 via systemd" \
       com.mesaguy.operatingsystem.eol="false"

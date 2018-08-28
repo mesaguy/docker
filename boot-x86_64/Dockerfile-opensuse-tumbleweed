@@ -30,7 +30,7 @@ VOLUME [ "/sys/fs/cgroup", "/run" ]
 CMD ["/usr/lib/systemd/systemd"]
 
 # Image metadata
-LABEL org.label-schema.vendor="MesaGuy" \
+LABEL org.label-schema.vendor="Mesaguy" \
       org.label-schema.name="OpenSUSE Linux latest rolling-release boot" \
       org.label-schema.description="Image boots OpenSUSE Linux's latest rolling-release via systemd" \
       com.mesaguy.operatingsystem.eol="false"

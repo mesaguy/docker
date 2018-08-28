@@ -22,7 +22,7 @@ rm -rf /var/log/*
 CMD ["/sbin/init"]
 
 # Image metadata
-LABEL org.label-schema.vendor="MesaGuy" \
+LABEL org.label-schema.vendor="Mesaguy" \
       org.label-schema.name="Amazon Linux v1 boot" \
       org.label-schema.description="Image boots Amazon Linux v1 via SysV init" \
       com.mesaguy.operatingsystem.eol="false"

@@ -12,7 +12,7 @@ yum -d1 -y install systemd systemd-libs dbus fsck.ext4 && \
 # Update select packages to allow git to reach https sites
 yum -d1 -y update nss curl libcurl && \
 # Strip down systemd
-(cd /lib/systemd/system/sysinit.target.wants && for i in *; do [ $i == systemd-tmpfiles-setup.service ] || rm -f $i; done) && \
+find /lib/systemd/system/sysinit.target.wants -type l ! -name systemd-tmpfiles-setup.service -delete && \
 rm -f /lib/systemd/system/multi-user.target.wants/* && \
 rm -f /etc/systemd/system/*.wants/* && \
 rm -f /lib/systemd/system/local-fs.target.wants/* && \
@@ -36,7 +36,7 @@ VOLUME [ "/sys/fs/cgroup", "/run" ]
 CMD ["/usr/lib/systemd/systemd"]
 
 # Image metadata
-LABEL org.label-schema.vendor="MesaGuy" \
+LABEL org.label-schema.vendor="Mesaguy" \
       org.label-schema.name="Oracle Linux 7.1 boot" \
       org.label-schema.description="Image boots Oracle Linux 7.1 via systemd" \
       com.mesaguy.operatingsystem.eol="true"
