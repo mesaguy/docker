@@ -1,5 +1,5 @@
 # Docker images for testing
-[![Build Status](https://travis-ci.org/mesaguy/docker.svg?branch=master)](https://travis-ci.org/mesaguy/docker)
+[![Build Status](https://api.travis-ci.org/mesaguy/docker.svg?branch=master)](https://travis-ci.org/mesaguy/docker)
 
 Images are bootable via for use by [kitchen](https://kitchen.ci) via SSH
 
