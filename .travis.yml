@@ -12,7 +12,7 @@ install:
   - bundle install
 
   # Download latest hadolint binary and set it as executable
-  - curl --location --output ${HADOLINT} $(curl -s https://api.github.com/repos/hadolint/hadolint/releases/latest | grep -E --max-count=1 'browser_download_url.*Linux' | cut -d '"' -f 4)
+  - curl -sL -o ${HADOLINT} "https://github.com/hadolint/hadolint/releases/download/v1.11.2/hadolint-$(uname -s)-$(uname -m)"
     && chmod 700 ${HADOLINT}
 
 
