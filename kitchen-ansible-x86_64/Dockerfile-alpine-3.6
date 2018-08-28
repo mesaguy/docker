@@ -1,28 +1,12 @@
 FROM mesaguy/alpine-3.6-kitchen-base-x86_64:latest
 
-# Update repository information
-RUN apk update && \
-# Install python
-apk add python && \
-# Install 'shadow' for user and group management
-apk add shadow && \
-# Remove caches
-rm -f /var/cache/apk/* && \
+# Install python and shadow (user and group management)
+RUN apk add --no-cache python shadow && \
 # Purge logs
 rm -rf /var/log/*
 
-# Add your specific Ansible SSH public key. This only works when run via
-# kitchen, when run with the following options in your .kitchen.yml file:
-#
-#    driver_config:
-#      build_options:
-#        build-arg: SSH_KEY=<%= File.read('.kitchen/docker_id_rsa.pub') %>
-#
-ARG SSH_KEY
-RUN echo "$SSH_KEY" >> /home/kitchen/.ssh/authorized_keys
-
 # Image metadata
-LABEL org.label-schema.vendor="MesaGuy" \
+LABEL org.label-schema.vendor="Mesaguy" \
       org.label-schema.name="Alpine Linux 3.6 kitchen-ansible" \
       org.label-schema.description="Image boots Alpine Linux 3.6 via OpenRC configured for kitchen ansible testing" \
       com.mesaguy.operatingsystem.eol="false"

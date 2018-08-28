@@ -2,7 +2,7 @@
 FROM gentoo/stage3-amd64:latest
 
 # Sync portage
-RUN mkdir -p /usr/portage/{distfiles,metadata,packages} && \
+RUN mkdir -p /usr/portage/distfiles /usr/portage/metadata /usr/portage/packages && \
 chown -R portage:portage /usr/portage && \
 emerge-webrsync && \
 # Add required base packages
@@ -12,7 +12,7 @@ echo 'rc_provide="loopback net"' >> /etc/rc.conf && \
 # Can't get ttys unless you run the container in privileged mode
 sed -i '/tty/d' /etc/inittab && \
 # Can't set hostname since docker sets it
-sed -i 's/hostname $opts/# hostname $opts/g' /etc/init.d/hostname && \
+sed -i "s/hostname \$opts/# hostname \$opts/g" /etc/init.d/hostname && \
 # Can't mount tmpfs since not privileged
 sed -i 's/mount -t tmpfs/# mount -t tmpfs/g' /lib/rc/sh/init.sh && \
 # Can't do cgroups
@@ -33,7 +33,7 @@ rm -rf /var/log/*
 CMD ["/sbin/init"]
 
 # Image metadata
-LABEL org.label-schema.vendor="MesaGuy" \
+LABEL org.label-schema.vendor="Mesaguy" \
       org.label-schema.name="Gentoo Linux latest rolling-release boot" \
       org.label-schema.description="Image boots Gentoo Linux's latest rolling-release via SysV init" \
       com.mesaguy.operatingsystem.eol="false"

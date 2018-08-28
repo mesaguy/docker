@@ -4,7 +4,7 @@ FROM centos:5.11
 # Use CentOS vault now that CentOS 5 is EOL
 RUN sed -i 's/enabled=1/enabled=0/' /etc/yum/pluginconf.d/fastestmirror.conf && \
 sed -i 's/mirrorlist/#mirrorlist/' /etc/yum.repos.d/*.repo && \
-sed -i -e 's/#\(baseurl.*\)mirror.centos.org/\1vault.centos.org/' -e 's/centos\/\$releasever/5.11/g' /etc/yum.repos.d/*.repo
+sed -i -e 's/#\(baseurl.*\)mirror.centos.org/\1vault.centos.org/' -e 's/centos\/.releasever/5.11/g' /etc/yum.repos.d/*.repo
 
 # Clean (purge) the repo cache
 RUN yum -d1 -y clean all && \
@@ -25,7 +25,7 @@ rm -rf /var/log/*
 CMD ["/sbin/init"]
 
 # Image metadata
-LABEL org.label-schema.vendor="MesaGuy" \
+LABEL org.label-schema.vendor="Mesaguy" \
       org.label-schema.name="CentOS Linux 5.11 boot" \
       org.label-schema.description="Image boots CentOS Linux 5.11 via SysV init" \
       com.mesaguy.operatingsystem.eol="true"

@@ -6,7 +6,7 @@ RUN dnf -y clean all && \
 # Update all packages
 dnf -y update && \
 # Strip down systemd
-(cd /lib/systemd/system/sysinit.target.wants && for i in *; do [ $i == systemd-tmpfiles-setup.service ] || rm -f $i; done) && \
+for f in /lib/systemd/system/sysinit.target.wants/* ; do if [ "$(basename "$f")" != "systemd-tmpfiles-setup.service" ] ; then rm -f "$f" ; fi ; done && \
 rm -f /lib/systemd/system/multi-user.target.wants/* && \
 rm -f /etc/systemd/system/*.wants/* && \
 rm -f /lib/systemd/system/local-fs.target.wants/* && \
@@ -30,7 +30,7 @@ VOLUME [ "/sys/fs/cgroup", "/run" ]
 CMD ["/usr/lib/systemd/systemd"]
 
 # Image metadata
-LABEL org.label-schema.vendor="MesaGuy" \
+LABEL org.label-schema.vendor="Mesaguy" \
       org.label-schema.name="Fedora Linux 27 boot" \
       org.label-schema.description="Image boots Fedora Linux 27 via systemd" \
       com.mesaguy.operatingsystem.eol="false"

@@ -1,16 +1,10 @@
 # Source
 FROM alpine:edge
 
-# Update repository information
-RUN apk update && \
-# Update all packages
-apk upgrade && \
 # Install openrc
-apk add openrc && \
+RUN apk --no-cache add openrc && \
 # Disable ttys
 sed -i 's/^tty/#tty/g' /etc/inittab && \
-# Remove caches
-rm -f /var/cache/apk/* && \
 # Purge logs
 rm -rf /var/log/*
 
@@ -21,7 +15,7 @@ VOLUME [ "/run" ]
 CMD ["/sbin/init"]
 
 # Image metadata
-LABEL org.label-schema.vendor="MesaGuy" \
+LABEL org.label-schema.vendor="Mesaguy" \
       org.label-schema.name="Alpine Linux edge latest rolling-release boot" \
       org.label-schema.description="Image boots Alpine Linux's latest rolling-release edge via OpenRC" \
       com.mesaguy.operatingsystem.eol="false"

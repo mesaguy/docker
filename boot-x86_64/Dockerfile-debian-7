@@ -17,7 +17,7 @@ rm -rf /var/log/*
 CMD ["/sbin/init"]
 
 # Image metadata
-LABEL org.label-schema.vendor="MesaGuy" \
+LABEL org.label-schema.vendor="Mesaguy" \
       org.label-schema.name="Debian Linux 7 (Wheezy) boot" \
       org.label-schema.description="Image boots Debian Linux 7 (Wheezy) via Upstart" \
       com.mesaguy.operatingsystem.eol="true"

@@ -1,14 +1,8 @@
 # Source (EOL)
 FROM alpine:3.3
 
-# Update repository information
-RUN apk update && \
-# Update all packages
-apk upgrade && \
 # Install openrc
-apk add openrc && \
-# Remove caches
-rm -f /var/cache/apk/* && \
+RUN apk --no-cache add openrc && \
 # Setup compatibility with libc
 mkdir -p /lib64 && ln -s /lib/libc.musl-x86_64.so.1 /lib64/ld-linux-x86-64.so.2 && \
 # Disable ttys
@@ -23,7 +17,7 @@ VOLUME [ "/run" ]
 CMD ["/sbin/init"]
 
 # Image metadata
-LABEL org.label-schema.vendor="MesaGuy" \
+LABEL org.label-schema.vendor="Mesaguy" \
       org.label-schema.name="Alpine Linux 3.3 boot" \
       org.label-schema.description="Image boots Alpine Linux 3.3 via OpenRC" \
       com.mesaguy.operatingsystem.eol="true"

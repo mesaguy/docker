@@ -16,7 +16,7 @@ rm -rf /var/log/*
 CMD ["/sbin/init"]
 
 # Image metadata
-LABEL org.label-schema.vendor="MesaGuy" \
+LABEL org.label-schema.vendor="Mesaguy" \
       org.label-schema.name="Oracle Linux 5.11 boot" \
       org.label-schema.description="Image boots Oracle Linux 5.11 via SysV init" \
       com.mesaguy.operatingsystem.eol="true"
