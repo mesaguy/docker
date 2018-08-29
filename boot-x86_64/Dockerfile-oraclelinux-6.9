@@ -5,10 +5,10 @@ FROM oraclelinux:6.9
 RUN yum -d1 -y clean all && \
 # Install docker OverlayFS plugin for yum:
 yum -d1 -y install yum-plugin-ovl && \
-# Update all packages
-yum -d1 -y update && \
 # Install init scripts
 yum -d1 -y install initscripts && \
+# Update select packages to allow git to reach https sites
+yum -d1 -y update nss curl libcurl && \
 # Disable all services
 rm /etc/rc.d/rc*.d/* && \
 # Disable ttys
