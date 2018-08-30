@@ -34,7 +34,7 @@ EOF
 ```
 
 ## Setup a kitchen configuration file
-See [Kitchen Docker](https://github.com/test-kitchen/kitchen-docker) documentation and the [Kitchen example file](https://github.com/mesaguy/ansible-prometheus/blob/master/kitchen-base-x86_64/kitchen.yml)
+See [Kitchen Docker](https://github.com/test-kitchen/kitchen-docker) documentation and the [Kitchen example file](https://github.com/mesaguy/docker/blob/master/kitchen-base-x86_64/kitchen.yml)
 
 The kitchen example file is almost complete, it only requires a kitchen provisioner (Ansible, Chef, Puppet, etc) be defined before use.
 
