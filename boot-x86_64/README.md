@@ -1,4 +1,5 @@
 # Bootable docker images
+[![Build Status](https://api.travis-ci.org/mesaguy/docker.svg?branch=master)](https://travis-ci.org/mesaguy/docker)
 
 ## Purpose of images
 This is a collection of bootable docker images. These Docker images are intended for use when running tests against numerous Linux distributions. For instance, these images can be utilized by (Rspec)[http://rspec.info], (Serverspec)[https://serverspec.org/], and (Inspec)[https://www.inspec.io] tests. These Docker images should not be used to deploy applications or be used in any form of production capacity.
@@ -14,3 +15,8 @@ Links to the official EOL information for the distribution images that I maintai
  - [OpenSUSE Linux](https://en.opensuse.org/Lifetime)
  - [Oracle Linux](http://www.oracle.com/us/support/library/elsp-lifetime-069338.pdf)
  - [Ubuntu Linux](https://wiki.ubuntu.com/Releases)
+
+# Author Information
+Mesaguy
+https://github.com/mesaguy/docker
+https://mesaguy.com
