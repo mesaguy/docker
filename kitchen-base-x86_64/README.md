@@ -54,5 +54,5 @@ Or run specific platform tests via:
 
 # Author Information
 Mesaguy
-https://github.com/mesaguy/docker
-https://mesaguy.com
+ - https://github.com/mesaguy/docker
+ - https://mesaguy.com

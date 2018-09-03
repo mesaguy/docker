@@ -18,5 +18,5 @@ Links to the official EOL information for the distribution images that I maintai
 
 # Author Information
 Mesaguy
-https://github.com/mesaguy/docker
-https://mesaguy.com
+ - https://github.com/mesaguy/docker
+ - https://mesaguy.com

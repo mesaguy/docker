@@ -10,5 +10,5 @@ Three forms of images are available:
 
 # Author Information
 Mesaguy
-https://github.com/mesaguy/docker
-https://mesaguy.com
+ - https://github.com/mesaguy/docker
+ - https://mesaguy.com
