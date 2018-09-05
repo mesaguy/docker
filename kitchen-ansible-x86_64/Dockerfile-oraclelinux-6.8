@@ -5,7 +5,7 @@ FROM mesaguy/oraclelinux-6.8-kitchen-base-x86_64:latest
 # Install EPEL for python-pip
 RUN yum -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-6.noarch.rpm && \
 # Install pip along with libraries needed to install Python OpenSSL libraries
-yum install -y python-pip python-devel libffi-devel openssl-devel && \
+yum install -y pyOpenSSL python-pip python-devel libffi-devel openssl-devel && \
 # Install Python OpenSSL libraries
 pip install urllib3 pyopenssl ndg-httpsclient pyasn1
 

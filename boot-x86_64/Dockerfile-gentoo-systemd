@@ -8,12 +8,12 @@ echo "masters = gentoo" > /usr/portage/metadata/layout.conf && \
 emerge-webrsync && \
 # Enable systemd
 eselect profile set "default/linux/amd64/17.0/systemd" && \
-# 20180705 causes build problems for libcap
-#echo "=dev-util/gperf-3.1" >> /etc/portage/package.mask/libcap && \
 # Uninstall udev and sysvinit
-emerge --unmerge dev-util/gperf sys-apps/sysvinit sys-fs/eudev virtual/udev && \
+emerge --unmerge sys-apps/sysvinit sys-fs/eudev virtual/dev-manager virtual/udev && \
 # Install base packages
 emerge app-portage/gentoolkit && \
+# 2018-09-04 Rebuild curl to fix cmake build
+emerge net-misc/curl && \
 # Install systemd
 emerge sys-apps/systemd && \
 # Setup systemd
