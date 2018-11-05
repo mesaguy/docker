@@ -21,7 +21,7 @@ sed -i 's/cgroup_add_service /# cgroup_add_service /g' /lib/rc/sh/openrc-run.sh 
 rc-update delete loopback boot && \
 rc-update delete netmount default && \
 # Remove troublesome and worthless start scripts
-rm -f /etc/init.d/bootmisc /etc/init.d/udev-settle /etc/init.d/udev /etc/init.d/udev-trigger /run/openrc && \
+rm -rf /etc/init.d/bootmisc /etc/init.d/udev-settle /etc/init.d/udev /etc/init.d/udev-trigger /run/openrc && \
 mkdir -p /run/openrc && \
 echo "default" > /run/openrc/softlevel && \
 # Cleanup portage, downloaded source files and compile directories
