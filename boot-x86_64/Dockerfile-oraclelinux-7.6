@@ -1,12 +1,10 @@
 # Source
-FROM centos:7.5.1804
+FROM oraclelinux:7.6
 
 # Clean (purge) the repo cache
 RUN yum -d1 -y clean all && \
 # Install docker OverlayFS plugin for yum:
 yum -d1 -y update yum && yum -d1 -y clean all && \
-# Remove troublesome packages
-yum -d1 -y remove fakesystemd systemd-container systemd-container-libs  && \
 # Install systemctl
 yum -d1 -y install systemd systemd-libs dbus fsck.ext4 yum-plugin-ovl && \
 # Update all packages
@@ -19,7 +17,6 @@ rm -f /lib/systemd/system/local-fs.target.wants/* && \
 rm -f /lib/systemd/system/sockets.target.wants/*udev* && \
 rm -f /lib/systemd/system/sockets.target.wants/*initctl* && \
 rm -f /lib/systemd/system/basic.target.wants/* && \
-rm -f /lib/systemd/system/anaconda.target.wants/* && \
 # Clean (purge) the repo cache
 yum -d1 -y clean all && rm -rf /var/cache/yum/* && \
 # Purge logs
@@ -37,6 +34,6 @@ CMD ["/usr/lib/systemd/systemd"]
 
 # Image metadata
 LABEL org.label-schema.vendor="Mesaguy" \
-      org.label-schema.name="CentOS Linux 7.5.1708 boot" \
-      org.label-schema.description="Image boots CentOS Linux 7.5.1708 via systemd" \
-      com.mesaguy.operatingsystem.eol="true"
+      org.label-schema.name="Oracle Linux 7.6 boot" \
+      org.label-schema.description="Image boots Oracle Linux 7.6 via systemd" \
+      com.mesaguy.operatingsystem.eol="false"

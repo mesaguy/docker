@@ -33,5 +33,5 @@ EXPOSE 22
 # Image metadata
 LABEL org.label-schema.vendor="Mesaguy" \
       org.label-schema.name="CentOS Linux 7.0 kitchen-ansible" \
-      org.label-schema.description="Image boots CentOS Linux 7.0 via SysV init configured for kitchen ansible testing" \
+      org.label-schema.description="Image boots CentOS Linux 7.0 via systemd configured for kitchen ansible testing" \
       com.mesaguy.operatingsystem.eol="true"

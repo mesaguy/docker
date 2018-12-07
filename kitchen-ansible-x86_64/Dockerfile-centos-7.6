@@ -1,4 +1,4 @@
-FROM mesaguy/oraclelinux-7.0-boot-x86_64:latest
+FROM mesaguy/centos-7.6-boot-x86_64:latest
 
 # Clean (purge) the repo cache
 RUN yum -d1 -y clean all && \
@@ -32,6 +32,6 @@ EXPOSE 22
 
 # Image metadata
 LABEL org.label-schema.vendor="Mesaguy" \
-      org.label-schema.name="Oracle Linux Linux 7.0 kitchen-ansible" \
-      org.label-schema.description="Image boots Oracle Linux Linux 7.0 via systemd configured for kitchen ansible testing" \
-      com.mesaguy.operatingsystem.eol="true"
+      org.label-schema.name="CentOS Linux 7.6 kitchen-ansible" \
+      org.label-schema.description="Image boots CentOS Linux 7.6 via systemd configured for kitchen ansible testing" \
+      com.mesaguy.operatingsystem.eol="false"
