@@ -12,6 +12,8 @@ RUN test -f /usr/lib/ssh/sftp-server && \
 printf "Subsystem sftp /usr/lib/ssh/sftp-server\\nUseDNS no\\nUsePAM no\\nPasswordAuthentication yes\\nUsePrivilegeSeparation no\\n" > /etc/ssh/sshd_config && \
 # Start SSH on boot
 systemctl enable sshd.service && \
+# Add 'nobody' user
+if ! getent passwd nobody; then useradd -d /var/lib/nobody -U -u 65534 -m -s /bin/bash -p '*' nobody; fi && \
 # Add 'kitchen' user
 if ! getent passwd kitchen; then useradd -d /home/kitchen -U -m -s /bin/bash -p '*' kitchen; fi && \
 # Allow unlimited sudo privileges to 'kitchen' user
