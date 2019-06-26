@@ -1,17 +1,8 @@
 # Source (EOL)
 FROM debian:7
 
-# Update repo definitions
-RUN apt-get update && \
-# Upgrade all packages
-apt-get dist-upgrade -y && \
 # Disable tty's
-sed -iE '/[0-9]+:.*tty[0-9]+/d' /etc/inittab && \
-# Clean (purge) the repo cache
-apt-get clean && \
-rm -rf /var/lib/apt/lists/* && \
-# Purge logs
-rm -rf /var/log/*
+RUN sed -iE '/[0-9]+:.*tty[0-9]+/d' /etc/inittab
 
 # Start via init
 CMD ["/sbin/init"]
