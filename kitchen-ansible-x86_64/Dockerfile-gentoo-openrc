@@ -32,6 +32,6 @@ EXPOSE 22
 
 # Image metadata
 LABEL org.label-schema.vendor="Mesaguy" \
-      org.label-schema.name="Gentoo Linux systemd latest rolling-release kitchen-ansible" \
-      org.label-schema.description="Image boots Gentoo Linux's latest rolling-release via systemd configured for kitchen ansible testing" \
+      org.label-schema.name="Gentoo Linux openrc latest rolling-release kitchen-ansible" \
+      org.label-schema.description="Image boots Gentoo Linux's latest rolling-release via SysV init configured for kitchen testing" \
       com.mesaguy.operatingsystem.eol="false"

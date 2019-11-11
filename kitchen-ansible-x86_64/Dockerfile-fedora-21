@@ -35,5 +35,5 @@ EXPOSE 22
 # Image metadata
 LABEL org.label-schema.vendor="Mesaguy" \
       org.label-schema.name="Fedora Linux 21 kitchen-ansible" \
-      org.label-schema.description="Image boots Fedora Linux 21 via systemd configured for kitchen ansible testing" \
+      org.label-schema.description="Image boots Fedora Linux 21 via systemd configured for kitchen testing" \
       com.mesaguy.operatingsystem.eol="true"

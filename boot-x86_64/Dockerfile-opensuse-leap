@@ -1,12 +1,11 @@
 # Source
-FROM opensuse:leap
+FROM opensuse/leap:latest
 
 # Install software and update
 RUN zypper --non-interactive dup && \
 # Install OS identifiers
 zypper --non-interactive install --no-confirm openSUSE-release && \
 # Strip down systemd
-find /usr/lib/systemd/system/sysinit.target.wants -type l ! -name systemd-tmpfiles-setup.service -delete && \
 rm -f /usr/lib/systemd/system/multi-user.target.wants/* && \
 rm -f /etc/systemd/system/*.wants/* && \
 rm -f /usr/lib/systemd/system/local-fs.target.wants/* && \

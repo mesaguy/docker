@@ -33,5 +33,5 @@ EXPOSE 22
 # Image metadata
 LABEL org.label-schema.vendor="Mesaguy" \
       org.label-schema.name="Amazon Linux v1 (2017.09) kitchen-ansible" \
-      org.label-schema.description="Image boots Amazon Linux v1 (2017.09) via SysV init configured for kitchen ansible testing" \
+      org.label-schema.description="Image boots Amazon Linux v1 (2017.09) via SysV init configured for kitchen testing" \
       com.mesaguy.operatingsystem.eol="false"

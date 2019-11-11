@@ -1,17 +1,38 @@
-FROM mesaguy/debian-8-kitchen-base-x86_64:latest
+FROM mesaguy/debian-8-boot-x86_64:latest
 
 # Update repo definitions
 RUN apt update && \
-# Install python for ansible
-apt install -y apt-utils python python-apt && \
+# Install lsb-release, openssh-server, python and sudo for kitchen
+apt install -y lsb-release openssh-server python sudo && \
 # Clean (purge) the repo cache
 apt-get clean && \
 rm -rf /var/lib/apt/lists/* && \
 # Purge logs
 rm -rf /var/log/*
 
+# Adjust sshd defaults per kitchen's needs
+RUN test -f /usr/lib/openssh/sftp-server && \
+printf "Subsystem sftp /usr/lib/openssh/sftp-server\\nUseDNS no\\nUsePAM no\\nPasswordAuthentication yes\\nUsePrivilegeSeparation no\\n" > /etc/ssh/sshd_config && \
+# Start SSH on boot
+update-rc.d ssh defaults && \
+# Add 'kitchen' user
+if ! getent passwd kitchen; then useradd -d /home/kitchen -m -s /bin/bash -p '*' kitchen; fi && \
+# Allow unlimited sudo privileges to 'kitchen' user
+echo "kitchen ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers && echo "Defaults !requiretty" >> /etc/sudoers && \
+# Make 'kitchen' user's ~/.ssh directory
+mkdir -m 0700 /home/kitchen/.ssh && \
+# Make 'kitchen' user's authorized_keys file (empty)
+touch /home/kitchen/.ssh/authorized_keys && \
+# Secure 'kitchen' user's authorized_keys file
+chmod 0600 /home/kitchen/.ssh/authorized_keys && \
+# Fix 'kitchen' user's SSH directory permissions
+chown -R kitchen:kitchen /home/kitchen/.ssh
+
+# Expose SSH
+EXPOSE 22
+
 # Image metadata
 LABEL org.label-schema.vendor="Mesaguy" \
       org.label-schema.name="Debian Linux 8 (Jessie) kitchen-ansible" \
-      org.label-schema.description="Image boots Debian Linux 8 (Jessie) via systemd configured for kitchen ansible testing" \
+      org.label-schema.description="Image boots Debian Linux 8 (Jessie) via systemd configured for kitchen testing" \
       com.mesaguy.operatingsystem.eol="false"

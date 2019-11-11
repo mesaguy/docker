@@ -1,5 +1,5 @@
 # Source
-FROM opensuse:tumbleweed
+FROM opensuse/tumbleweed:latest
 
 # Install software and update
 RUN zypper --non-interactive dup && \
