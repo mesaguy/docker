@@ -1,20 +1,19 @@
-FROM mesaguy/debian-8-boot-x86_64:latest
+FROM mesaguy/centos-7.7-boot-x86_64:latest
 
-# Update repo definitions
-RUN apt update && \
-# Install lsb-release, openssh-server, python and sudo for kitchen
-apt install -y lsb-release openssh-server python sudo && \
 # Clean (purge) the repo cache
-apt-get clean && \
-rm -rf /var/lib/apt/lists/* && \
+RUN yum -d1 -y clean all && \
+# Install sudo and openssh for kitchen
+yum install -y openssh-server sudo && \
+# Clean (purge) the repo cache
+yum -d1 -y clean all && rm -rf /var/cache/yum/* && \
 # Purge logs
-rm -rf /var/log/*
+rm -rf /var/log/* /var/run/log/journal
 
 # Adjust sshd defaults per kitchen's needs
-RUN test -f /usr/lib/openssh/sftp-server && \
-printf "Subsystem sftp /usr/lib/openssh/sftp-server\\nUseDNS no\\nUsePAM no\\nPasswordAuthentication yes\\nUsePrivilegeSeparation no\\n" > /etc/ssh/sshd_config && \
+RUN test -f /usr/libexec/openssh/sftp-server && \
+printf "Subsystem sftp /usr/libexec/openssh/sftp-server\\nUseDNS no\\nUsePAM no\\nPasswordAuthentication yes\\nUsePrivilegeSeparation no\\n" > /etc/ssh/sshd_config && \
 # Start SSH on boot
-update-rc.d ssh defaults && \
+systemctl enable sshd.service && \
 # Add 'kitchen' user
 if ! getent passwd kitchen; then useradd -d /home/kitchen -m -s /bin/bash -p '*' kitchen; fi && \
 # Allow unlimited sudo privileges to 'kitchen' user
@@ -33,6 +32,6 @@ EXPOSE 22
 
 # Image metadata
 LABEL org.label-schema.vendor="Mesaguy" \
-      org.label-schema.name="Debian Linux 8 (Jessie) kitchen-ansible" \
-      org.label-schema.description="Image boots Debian Linux 8 (Jessie) via systemd configured for kitchen testing" \
+      org.label-schema.name="CentOS Linux 7.7 kitchen-ansible" \
+      org.label-schema.description="Image boots CentOS Linux 7.7 via systemd configured for kitchen testing" \
       com.mesaguy.operatingsystem.eol="false"

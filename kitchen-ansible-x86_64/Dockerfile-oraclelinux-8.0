@@ -1,11 +1,13 @@
 FROM mesaguy/oraclelinux-8.0-boot-x86_64:latest
 
 # Clean (purge) the repo cache
-RUN yum -d1 -y clean all && \
-# Install sudo and openssh for kitchen
-yum install -y openssh-server sudo && \
+RUN dnf -d1 -y clean all && \
+# Default openssh-server is missing sshd.service
+dnf -y reinstall openssh-server && \
+# Install openssh for kitchen
+dnf install -y sudo && \
 # Clean (purge) the repo cache
-yum -d1 -y clean all && rm -rf /var/cache/yum/* && \
+dnf -d1 -y clean all && rm -rf /var/cache/dnf/* && \
 # Purge logs
 rm -rf /var/log/* /var/run/log/journal
 

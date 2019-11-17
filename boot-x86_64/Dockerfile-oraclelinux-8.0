@@ -5,6 +5,8 @@ FROM oraclelinux:8.0
 RUN dnf -y clean all && \
 # Update all packages
 dnf -y update && \
+# Replace broken systemd, ships with missing libsystemd-shared-239.so
+dnf -y reinstall systemd && \
 # Strip down systemd
 for f in /lib/systemd/system/sysinit.target.wants/* ; do if [ "$(basename "$f")" != "systemd-tmpfiles-setup.service" ] ; then rm -f "$f" ; fi ; done && \
 rm -f /lib/systemd/system/multi-user.target.wants/* && \

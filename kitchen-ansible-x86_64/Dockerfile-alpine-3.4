@@ -3,7 +3,7 @@ FROM mesaguy/alpine-3.4-boot-x86_64:latest
 # Add edge community repository (for shadow)
 RUN echo http://dl-2.alpinelinux.org/alpine/edge/community/ >> /etc/apk/repositories && \
 # Install bash, python, sudo, openssh and shadow for kitchen
-RUN apk --no-cache add bash openssh python shadow sudo && \
+apk --no-cache add bash openssh python shadow sudo && \
 # Purge logs
 rm -rf /var/log/*
 

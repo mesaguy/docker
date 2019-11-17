@@ -1,7 +1,7 @@
 FROM mesaguy/alpine-3.7-boot-x86_64:latest
 
 # Install bash, python, sudo, openssh and shadow for kitchen
-RUN apk --no-cache add bash openssh sudo && \
+RUN apk --no-cache add bash openssh python shadow sudo && \
 # Purge logs
 rm -rf /var/log/*
 
