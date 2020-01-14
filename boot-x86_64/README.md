@@ -13,7 +13,7 @@ Links to the official EOL information for the distribution images that I maintai
  - [Debian Linux](https://wiki.debian.org/DebianReleases)
  - [Fedora Linux](https://fedoraproject.org/wiki/End_of_life)
  - [OpenSUSE Linux](https://en.opensuse.org/Lifetime)
- - [Oracle Linux](http://www.oracle.com/us/support/library/elsp-lifetime-069338.pdf)
+ - [Oracle Linux](https://www.oracle.com/a/ocom/docs/elsp-lifetime-069338.pdf)
  - [Ubuntu Linux](https://wiki.ubuntu.com/Releases)
 
 # Author Information
