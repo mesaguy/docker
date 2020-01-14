@@ -2,16 +2,11 @@ FROM mesaguy/oraclelinux-6.7-boot-x86_64:latest
 
 # Clean (purge) the repo cache
 RUN yum -d1 -y clean all && \
-# Install sudo and openssh for kitchen
-yum install -y openssh-server sudo && \
-# This Dockerfile RUN fixes problems with Ansible in relation to downloading files
-# from https sites.
-# Install EPEL for python-pip
+# Install EPEL for newer OpenSSL libraries
 yum -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-6.noarch.rpm && \
-# Install pip along with libraries needed to install Python OpenSSL libraries
-yum install -y pyOpenSSL python-pip python-devel libffi-devel openssl-devel && \
-# Install Python OpenSSL libraries
-pip install urllib3 pyopenssl ndg-httpsclient pyasn1 && \
+# Install newer Python OpenSSL libraries for interacting with https
+# Install sudo and openssh for kitchen
+yum install -y libffi-devel openssh-server openssl-devel pyOpenSSL python-crypto2.6 python-devel python-pip python-pyasn1 sudo && \
 # Clean (purge) the repo cache
 yum -d1 -y clean all && rm -rf /var/cache/yum/* && \
 # Purge logs

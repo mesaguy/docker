@@ -4,7 +4,7 @@ FROM mesaguy/oraclelinux-8.0-boot-x86_64:latest
 RUN dnf -d1 -y clean all && \
 # Default openssh-server is missing sshd.service
 dnf -y reinstall openssh-server && \
-# Install openssh for kitchen
+# Install sudo for kitchen
 dnf install -y sudo && \
 # Clean (purge) the repo cache
 dnf -d1 -y clean all && rm -rf /var/cache/dnf/* && \
