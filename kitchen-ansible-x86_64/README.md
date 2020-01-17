@@ -1,9 +1,7 @@
 # Docker images for kitchen ansible based testing
 [![Build Status](https://api.travis-ci.org/mesaguy/docker.svg?branch=master)](https://travis-ci.org/mesaguy/docker)
 
-Images are bootable for use by [kitchen](https://kitchen.ci) via SSH.
-
-If you are using Ansible, see the [Kitchen Ansible docker images](https://github.com/mesaguy/docker/tree/master/kitchen-ansible-x86_64)
+Images are bootable for use by [kitchen](https://github.com/test-kitchen/test-kitchen) via SSH.
 
 # Usage
 
@@ -19,7 +17,6 @@ Create a dummy Dockerfile in your project. This is Dockerfile will add the uniqu
     cat > tests/Dockerfile << EOF
     ARG DOCKER_IMAGE_NAME
     FROM $DOCKER_IMAGE_NAME
-    
     # Add your specific Ansible SSH public key. This only works when run via
     # kitchen, when run with the following options in your .kitchen.yml file:
     #
