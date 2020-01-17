@@ -10,8 +10,6 @@ yum -d1 -y remove fakesystemd systemd-container systemd-container-libs  && \
 # Install systemctl
 yum -d1 -y install systemd systemd-libs dbus fsck.ext4 yum-plugin-ovl && \
 # Update all packages
-yum -d1 -y update && \
-# Strip down systemd
 find /lib/systemd/system/sysinit.target.wants -type l ! -name systemd-tmpfiles-setup.service -delete && \
 rm -f /lib/systemd/system/multi-user.target.wants/* && \
 rm -f /etc/systemd/system/*.wants/* && \
