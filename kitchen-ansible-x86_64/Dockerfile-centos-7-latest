@@ -1,0 +1,37 @@
+FROM mesaguy/centos-7-latest-boot-x86_64:latest
+
+# Clean (purge) the repo cache
+RUN yum -d1 -y clean all && \
+# Install sudo and openssh for kitchen
+yum install -y openssh-server sudo && \
+# Clean (purge) the repo cache
+yum -d1 -y clean all && rm -rf /var/cache/yum/* && \
+# Purge logs
+rm -rf /var/log/* /var/run/log/journal
+
+# Adjust sshd defaults per kitchen's needs
+RUN test -f /usr/libexec/openssh/sftp-server && \
+printf "Subsystem sftp /usr/libexec/openssh/sftp-server\\nUseDNS no\\nUsePAM no\\nPasswordAuthentication yes\\nUsePrivilegeSeparation no\\n" > /etc/ssh/sshd_config && \
+# Start SSH on boot
+systemctl enable sshd.service && \
+# Add 'kitchen' user
+if ! getent passwd kitchen; then useradd -d /home/kitchen -m -s /bin/bash -p '*' kitchen; fi && \
+# Allow unlimited sudo privileges to 'kitchen' user
+echo "kitchen ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers && echo "Defaults !requiretty" >> /etc/sudoers && \
+# Make 'kitchen' user's ~/.ssh directory
+mkdir -m 0700 /home/kitchen/.ssh && \
+# Make 'kitchen' user's authorized_keys file (empty)
+touch /home/kitchen/.ssh/authorized_keys && \
+# Secure 'kitchen' user's authorized_keys file
+chmod 0600 /home/kitchen/.ssh/authorized_keys && \
+# Fix 'kitchen' user's SSH directory permissions
+chown -R kitchen:kitchen /home/kitchen/.ssh
+
+# Expose SSH
+EXPOSE 22
+
+# Image metadata
+LABEL org.label-schema.vendor="Mesaguy" \
+      org.label-schema.name="CentOS Linux 7 with latest patches kitchen-ansible" \
+      org.label-schema.description="Image boots CentOS Linux 7 with latest patches via systemd configured for kitchen testing" \
+      com.mesaguy.operatingsystem.eol="false"
