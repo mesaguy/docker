@@ -1,12 +1,10 @@
-# Source
-FROM centos:8
+# Source. When checked on 2020-01-16, there was no 8.0 specific tag on hub.docker.com
+FROM centos@sha256:6ab380c5a5acf71c1b6660d645d2cd79cc8ce91b38e0352cbf9561e050427baf
 
 # Clean (purge) the repo cache
 RUN dnf -y clean all && \
-# Update all packages
-dnf -y update && \
 # Replace broken systemd, ships with missing libsystemd-shared-239.so
-dnf -y reinstall systemd && \
+dnf -y install systemd && \
 # Strip down systemd
 for f in /lib/systemd/system/sysinit.target.wants/* ; do if [ "$(basename "$f")" != "systemd-tmpfiles-setup.service" ] ; then rm -f "$f" ; fi ; done && \
 rm -f /lib/systemd/system/multi-user.target.wants/* && \
