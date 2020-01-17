@@ -2,8 +2,8 @@ FROM mesaguy/centos-7.1-boot-x86_64:latest
 
 # Clean (purge) the repo cache
 RUN yum -d1 -y clean all && \
-# Install sudo and openssh for kitchen
-yum install -y openssh-server sudo && \
+# Install sudo, selinux libraries needed for dbus, and openssh for kitchen
+yum install -y libselinux-python openssh-server sudo && \
 # Clean (purge) the repo cache
 yum -d1 -y clean all && rm -rf /var/cache/yum/* && \
 # Purge logs
