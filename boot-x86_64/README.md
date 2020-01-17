@@ -8,15 +8,15 @@ This is a collection of bootable docker images. These Docker images are intended
 # EOL (End Of Life) URLs
 Links to the official EOL information for the distribution images that I maintain can be found below. Distributions that rely on continuous rolling releases (ie: Arch, Gentoo, Amazon) are never EOL and do not have EOL documentation:
 
- - [Alpine Linux](https://wiki.alpinelinux.org/wiki/Alpine_Linux:Releases)
- - [CentOS Linux](https://wiki.centos.org/FAQ/General)
- - [Debian Linux](https://wiki.debian.org/DebianReleases)
- - [Fedora Linux](https://fedoraproject.org/wiki/End_of_life)
- - [OpenSUSE Linux](https://en.opensuse.org/Lifetime)
- - [Oracle Linux](https://www.oracle.com/a/ocom/docs/elsp-lifetime-069338.pdf)
- - [Ubuntu Linux](https://wiki.ubuntu.com/Releases)
+- [Alpine Linux](https://wiki.alpinelinux.org/wiki/Alpine_Linux:Releases)
+- [CentOS Linux](https://wiki.centos.org/FAQ/General)
+- [Debian Linux](https://wiki.debian.org/DebianReleases)
+- [Fedora Linux](https://fedoraproject.org/wiki/End_of_life)
+- [OpenSUSE Linux](https://en.opensuse.org/Lifetime)
+- [Oracle Linux](https://www.oracle.com/a/ocom/docs/elsp-lifetime-069338.pdf)
+- [Ubuntu Linux](https://wiki.ubuntu.com/Releases)
 
 # Author Information
 Mesaguy
- - https://github.com/mesaguy/docker
- - https://mesaguy.com
+- https://github.com/mesaguy/docker
+- https://mesaguy.com
