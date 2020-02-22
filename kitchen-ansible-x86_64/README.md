@@ -36,6 +36,10 @@ See [Kitchen Ansible Docker](https://github.com/test-kitchen/kitchen-docker) doc
 
 The kitchen example file is almost complete, it only requires a kitchen provisioner (Ansible, Chef, Puppet, etc) be defined before use.
 
+Create an SSH key for testing with kitchen:
+
+    ssh-keygen -f .kitchen/docker_id_rsa -t rsa -N ''
+
 ## Run kitchen
 See the available test platforms:
 
