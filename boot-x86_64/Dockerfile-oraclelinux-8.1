@@ -3,8 +3,6 @@ FROM oraclelinux:8.1
 
 # Clean (purge) the repo cache
 RUN dnf -y clean all && \
-# Update all packages
-dnf -y update && \
 # Replace broken systemd, ships with missing libsystemd-shared-239.so
 dnf -y reinstall systemd && \
 # Strip down systemd
@@ -33,6 +31,6 @@ CMD ["/usr/lib/systemd/systemd"]
 
 # Image metadata
 LABEL org.label-schema.vendor="Mesaguy" \
-      org.label-schema.name="Oracle Linux 8 with latest patches boot" \
-      org.label-schema.description="Image boots Oracle Linux 8 with latest patches systemd" \
+      org.label-schema.name="Oracle Linux 8.1 boot" \
+      org.label-schema.description="Image boots Oracle Linux 8.1 systemd" \
       com.mesaguy.operatingsystem.eol="false"
