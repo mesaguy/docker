@@ -1,9 +1,9 @@
 FROM mesaguy/ubuntu-18.04-boot-x86_64:latest
 
 # Update repo definitions
-RUN apt update && \
+RUN apt-get update && \
 # Install openssh, python, and sudo for kitchen
-apt install --no-install-recommends -y openssh-server python sudo && \
+apt-get install --no-install-recommends -y openssh-server python sudo && \
 # Clean (purge) the repo cache
 apt-get clean && \
 rm -rf /var/lib/apt/lists/* && \

@@ -2,11 +2,11 @@
 FROM debian:9
 
 # Update repo definitions
-RUN apt update && \
+RUN apt-get update && \
 # Upgrade all packages
-apt dist-upgrade -y && \
+apt-get dist-upgrade -y && \
 # Install systemd
-apt install --no-install-recommends -y systemd && \
+apt-get install --no-install-recommends -y systemd && \
 # Don't start any optional services except for the few we need.
 find /etc/systemd/system \
 /lib/systemd/system \
