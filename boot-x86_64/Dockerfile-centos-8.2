@@ -5,8 +5,6 @@ FROM centos:8.2.2004
 RUN dnf -y clean all && \
 # Replace broken systemd, ships with missing libsystemd-shared-239.so
 dnf -y install systemd && \
-# Update all packages
-dnf -y update && \
 # Strip down systemd
 for f in /lib/systemd/system/sysinit.target.wants/* ; do if [ "$(basename "$f")" != "systemd-tmpfiles-setup.service" ] ; then rm -f "$f" ; fi ; done && \
 rm -f /lib/systemd/system/multi-user.target.wants/* && \
@@ -33,6 +31,6 @@ CMD ["/usr/lib/systemd/systemd"]
 
 # Image metadata
 LABEL org.label-schema.vendor="Mesaguy" \
-      org.label-schema.name="CentOS Linux 8 with latest patches boot" \
-      org.label-schema.description="Image boots CentOS Linux 8 with latest patches via systemd" \
+      org.label-schema.name="CentOS Linux 8.2.2004 boot" \
+      org.label-schema.description="Image boots CentOS Linux 8.2.2004 via systemd" \
       com.mesaguy.operatingsystem.eol="false"

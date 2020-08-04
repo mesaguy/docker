@@ -1,5 +1,5 @@
 # Source
-FROM oraclelinux:8.1
+FROM oraclelinux:8.2
 
 # Clean (purge) the repo cache
 RUN dnf -y clean all && \

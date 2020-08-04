@@ -1,8 +1,8 @@
-# Bootable docker images
+# Bootable container images
 [![Build Status](https://api.travis-ci.org/mesaguy/docker.svg?branch=master)](https://travis-ci.org/mesaguy/docker)
 
 ## Purpose of images
-This is a collection of bootable docker images. These Docker images are intended for use when running tests against numerous Linux distributions. For instance, these images can be utilized by (Rspec)[http://rspec.info], (Serverspec)[https://serverspec.org/], and (Inspec)[https://www.inspec.io] tests. These Docker images should not be used to deploy applications or be used in any form of production capacity.
+This is a collection of bootable container images. These Docker images are intended for use when running tests against numerous Linux distributions. For instance, these images can be utilized by (Rspec)[http://rspec.info], (Serverspec)[https://serverspec.org/], and (Inspec)[https://www.inspec.io] tests. These Docker images should not be used to deploy applications or be used in any form of production capacity.
 
 
 # EOL (End Of Life) URLs
@@ -19,4 +19,3 @@ Links to the official EOL information for the distribution images that I maintai
 # Author Information
 Mesaguy
 - https://github.com/mesaguy/docker
-- https://mesaguy.com

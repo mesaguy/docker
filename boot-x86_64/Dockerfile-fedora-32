@@ -1,10 +1,8 @@
 # Source
-FROM centos:8.2.2004
+FROM fedora:32
 
 # Clean (purge) the repo cache
 RUN dnf -y clean all && \
-# Replace broken systemd, ships with missing libsystemd-shared-239.so
-dnf -y install systemd && \
 # Update all packages
 dnf -y update && \
 # Strip down systemd
@@ -33,6 +31,6 @@ CMD ["/usr/lib/systemd/systemd"]
 
 # Image metadata
 LABEL org.label-schema.vendor="Mesaguy" \
-      org.label-schema.name="CentOS Linux 8 with latest patches boot" \
-      org.label-schema.description="Image boots CentOS Linux 8 with latest patches via systemd" \
+      org.label-schema.name="Fedora Linux 32 boot" \
+      org.label-schema.description="Image boots Fedora Linux 32 via systemd" \
       com.mesaguy.operatingsystem.eol="false"
