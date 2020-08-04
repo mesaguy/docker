@@ -1,0 +1,22 @@
+# Source
+FROM alpine:3.12
+
+# Install openrc
+RUN apk --no-cache add openrc && \
+# Install utilities needed to test Ansible
+apk --no-cache add net-tools python3 sudo && \
+# Disable ttys
+sed -i 's/^tty/#tty/g' /etc/inittab && \
+# Purge logs
+rm -rf /var/log/*
+
+# Needed by OpenRC
+VOLUME [ "/run" ]
+
+# Start via init
+CMD ["/sbin/init"]
+
+# Image metadata
+LABEL org.label-schema.vendor="Mesaguy" \
+      org.label-schema.name="Alpine Linux 3.12 boot" \
+      org.label-schema.description="Image boots Alpine Linux 3.12 via OpenRC"

@@ -1,0 +1,23 @@
+# Source (EOL)
+FROM oraclelinux:5.11
+
+# Clean (purge) the repo cache
+RUN yum -d1 -y clean all && \
+# Update all packages
+yum -d1 -y update && \
+# Install utilities needed to test Ansible
+yum -d1 -y install net-tools sudo && \
+# Disable all services
+rm /etc/rc.d/rc*.d/* && \
+# Clean (purge) the repo cache
+yum -d1 -y clean all && rm -rf /var/cache/yum/* && \
+# Purge logs
+rm -rf /var/log/*
+
+# Start via init
+CMD ["/sbin/init"]
+
+# Image metadata
+LABEL org.label-schema.vendor="Mesaguy" \
+      org.label-schema.name="Oracle Linux 5.11 boot" \
+      org.label-schema.description="Image boots Oracle Linux 5.11 via SysV init"

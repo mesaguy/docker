@@ -1,0 +1,31 @@
+# Source
+FROM oraclelinux:6.7
+
+# Clean (purge) the repo cache
+RUN yum -d1 -y clean all && rm -rf /var/cache/yum/* && \
+# Install docker OverlayFS plugin for yum:
+yum -d1 -y install yum-plugin-ovl || true && \
+# Install init scripts
+yum -d1 -y install initscripts && \
+# Update select packages to allow git to reach https sites
+yum -d1 -y update nss curl libcurl && \
+# Install utilities needed to test Ansible
+yum -d1 -y install net-tools sudo && \
+# Disable all services
+rm /etc/rc.d/rc*.d/* && \
+# Disable ttys
+mv /etc/init/serial.conf /etc/init/serial.conf.disabled && \
+mv /etc/init/tty.conf /etc/init/tty.conf.disabled && \
+mv /etc/init/start-ttys.conf /etc/init/start-ttys.conf.disabled && \
+# Clean (purge) the repo cache
+yum -d1 -y clean all && rm -rf /var/cache/yum/* && \
+# Purge logs
+rm -rf /var/log/*
+
+# Start via init
+CMD ["/sbin/init"]
+
+# Image metadata
+LABEL org.label-schema.vendor="Mesaguy" \
+      org.label-schema.name="Oracle Linux 6.7 boot" \
+      org.label-schema.description="Image boots Oracle Linux 6.7 via SysV init"

@@ -1,0 +1,29 @@
+# Source
+FROM oraclelinux:6.10
+
+# Clean (purge) the repo cache
+RUN yum -d1 -y clean all && \
+# Install docker OverlayFS plugin for yum:
+yum -d1 -y install yum-plugin-ovl && \
+# Install utilities needed to test Ansible
+yum -d1 -y install net-tools sudo && \
+# Install init scripts
+yum -d1 -y install initscripts && \
+# Disable all services
+rm /etc/rc.d/rc*.d/* && \
+# Disable ttys
+mv /etc/init/serial.conf /etc/init/serial.conf.disabled && \
+mv /etc/init/tty.conf /etc/init/tty.conf.disabled && \
+mv /etc/init/start-ttys.conf /etc/init/start-ttys.conf.disabled && \
+# Clean (purge) the repo cache
+yum -d1 -y clean all && rm -rf /var/cache/yum/* && \
+# Purge logs
+rm -rf /var/log/*
+
+# Start via init
+CMD ["/sbin/init"]
+
+# Image metadata
+LABEL org.label-schema.vendor="Mesaguy" \
+      org.label-schema.name="Oracle Linux 6.10 boot" \
+      org.label-schema.description="Image boots Oracle Linux 6.10 via SysV init"
