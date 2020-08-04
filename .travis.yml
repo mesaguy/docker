@@ -12,13 +12,13 @@ install:
   - bundle install
 
   # Download latest hadolint binary and set it as executable
-  - curl -sL -o ${HADOLINT} "https://github.com/hadolint/hadolint/releases/download/v1.11.2/hadolint-$(uname -s)-$(uname -m)"
+  - curl -sL -o ${HADOLINT} "https://github.com/hadolint/hadolint/releases/download/v1.18.0/hadolint-$(uname -s)-$(uname -m)"
     && chmod 700 ${HADOLINT}
 
 
 script:
   # Validate README.md URLs
-  - awesome_bot --skip-save-results --allow-dupe --files $(find . -name "*.md" | tr '\n' ',')
+  - awesome_bot --request-delay 1 --skip-save-results --allow-dupe --white-list=localhost --files $(find . -name "*.md" | tr '\n' ',')
 
   # DL3007 Using latest is prone to errors if the image will ever update. Pin the version explicitly to a release tag
   # DL3008 Pin versions in apt get install. Instead of `apt-get install <package>` use `apt-get install <package>=<version>`
