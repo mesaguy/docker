@@ -26,4 +26,4 @@ script:
   # SC2039 In POSIX sh, $'..' is undefined.
 
   # Lint Dockerfile 
-  - git ls-files --exclude='Dockerfile*' --ignored | xargs --max-lines=1 ./hadolint --ignore DL3007 --ignore DL3008 --ignore DL3018 --ignore SC2039
+  - git ls-files --exclude='Dockerfile*' --ignored | xargs --max-lines=1 ${HADOLINT} --ignore DL3007 --ignore DL3008 --ignore DL3018 --ignore SC2039
