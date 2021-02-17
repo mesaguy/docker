@@ -1,23 +1,23 @@
 # Source
-FROM archlinux/base:latest
+FROM archlinux:base-20210124.0.14185
 
-# Update repo definitions
-RUN pacman -Syu --noconfirm && \
-# Install systemctl
-pacman --noconfirm -S systemd && \
-# Strip down systemd
-find /lib/systemd/system/sysinit.target.wants -type l ! -name systemd-tmpfiles-setup.service -delete && \
-rm -f /lib/systemd/system/multi-user.target.wants/* && \
-rm -f /etc/systemd/system/*.wants/* && \
-rm -f /lib/systemd/system/local-fs.target.wants/* && \
-rm -f /lib/systemd/system/sockets.target.wants/*udev* && \
-rm -f /lib/systemd/system/sockets.target.wants/*initctl* && \
-rm -f /lib/systemd/system/basic.target.wants/* && \
-rm -f /lib/systemd/system/anaconda.target.wants/* && \
-# Clean (purge) the repo cache
-pacman --noconfirm -Scc && rm -rf /var/lib/pacman/sync/* && \
-# Purge logs
-rm -rf /var/log/* /var/run/log/journal
+# Update repo definitions and packages
+RUN pacman -Syy --noconfirm && \
+    # Install systemd
+    pacman --noconfirm -S systemd && \
+    # Strip down systemd
+    find /lib/systemd/system/sysinit.target.wants -type l ! -name systemd-tmpfiles-setup.service -delete && \
+    rm -f /lib/systemd/system/multi-user.target.wants/* && \
+    rm -f /etc/systemd/system/*.wants/* && \
+    rm -f /lib/systemd/system/local-fs.target.wants/* && \
+    rm -f /lib/systemd/system/sockets.target.wants/*udev* && \
+    rm -f /lib/systemd/system/sockets.target.wants/*initctl* && \
+    rm -f /lib/systemd/system/basic.target.wants/* && \
+    rm -f /lib/systemd/system/anaconda.target.wants/* && \
+    # Clean (purge) the repo cache
+    pacman --noconfirm -Scc && rm -rf /var/lib/pacman/sync/* && \
+    # Purge logs
+    rm -rf /var/log/* /var/run/log/journal
 
 # Without this, init won't start the enabled services. Starting the services
 # fails with one of:
