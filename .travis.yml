@@ -1,6 +1,6 @@
 ---
 env:
-  - HADOLINT_VERSION=1.18.0 HADOLINT="${HOME}/hadolint"
+  - HADOLINT_VERSION=2.4.1 HADOLINT="${HOME}/hadolint"
 sudo: false
 language: generic
 rvm:
@@ -11,7 +11,7 @@ install:
   - bundle install
 
   # Download latest hadolint binary and set it as executable
-  - curl -sL -o ${HADOLINT} "https://github.com/hadolint/hadolint/releases/download/v1.18.0/hadolint-$(uname -s)-$(uname -m)"
+  - curl -sL -o ${HADOLINT} "https://github.com/hadolint/hadolint/releases/download/v${HADOLINT_VERSION}/hadolint-$(uname -s)-$(uname -m)"
     && chmod 700 ${HADOLINT}
 
 

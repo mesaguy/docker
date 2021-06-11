@@ -1,24 +1,23 @@
 # Source
-FROM oraclelinux:7.9
+FROM oraclelinux:8.3
 
 # Clean (purge) the repo cache
-RUN yum -d1 -y clean all && \
-  # Install docker OverlayFS plugin for yum:
-  yum -d1 -y update yum && yum -d1 -y clean all && \
-  # Install systemctl
-  yum -d1 -y install systemd systemd-libs dbus fsck.ext4 yum-plugin-ovl && \
+RUN dnf -y clean all && \
+  # Replace broken systemd, ships with missing libsystemd-shared-239.so
+  dnf -y reinstall systemd && \
   # Install utilities needed to test Ansible
   yum -d1 -y install net-tools sudo && \
   # Strip down systemd
-  find /lib/systemd/system/sysinit.target.wants -type l ! -name systemd-tmpfiles-setup.service -delete && \
+  for f in /lib/systemd/system/sysinit.target.wants/* ; do if [ "$(basename "$f")" != "systemd-tmpfiles-setup.service" ] ; then rm -f "$f" ; fi ; done && \
   rm -f /lib/systemd/system/multi-user.target.wants/* && \
   rm -f /etc/systemd/system/*.wants/* && \
   rm -f /lib/systemd/system/local-fs.target.wants/* && \
   rm -f /lib/systemd/system/sockets.target.wants/*udev* && \
   rm -f /lib/systemd/system/sockets.target.wants/*initctl* && \
   rm -f /lib/systemd/system/basic.target.wants/* && \
+  rm -f /lib/systemd/system/anaconda.target.wants/* && \
   # Clean (purge) the repo cache
-  yum -d1 -y clean all && rm -rf /var/cache/yum/* && \
+  dnf -y clean all && rm -rf /var/cache/dnf/* /var/cache/yum/* && \
   # Purge logs
   rm -rf /var/log/* /var/run/log/journal
 
@@ -46,5 +45,5 @@ CMD ["/usr/lib/systemd/systemd"]
 
 # Image metadata
 LABEL org.label-schema.vendor="Mesaguy" \
-      org.label-schema.name="Oracle Linux 7 with latest patches boot" \
-      org.label-schema.description="Image boots Oracle Linux 7 with latest patches via systemd"
+      org.label-schema.name="Oracle Linux 8.3 boot" \
+      org.label-schema.description="Image boots Oracle Linux 8.3 systemd"

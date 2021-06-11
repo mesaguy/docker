@@ -1,5 +1,5 @@
 # Source
-FROM ubuntu:19.10
+FROM ubuntu:21.04
 
 # Update repo definitions
 RUN apt-get update && \
@@ -46,5 +46,5 @@ CMD ["/lib/systemd/systemd"]
 
 # Image metadata
 LABEL org.label-schema.vendor="Mesaguy" \
-      org.label-schema.name="Ubuntu Linux 19.10 (Eoan Ermine) boot" \
-      org.label-schema.description="Image boots Ubuntu Linux 19.10 (Eoan Ermine) via systemd"
+      org.label-schema.name="Ubuntu Linux 21.04 (Hirsute Hippo) boot" \
+      org.label-schema.description="Image boots Ubuntu Linux 21.04 (Hirsute Hippo) via systemd"
