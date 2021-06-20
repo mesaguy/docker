@@ -1,5 +1,5 @@
 # Source
-FROM ubuntu:20.10
+FROM ubuntu:21.04
 
 # Update repo definitions
 RUN apt-get update && \
@@ -34,6 +34,6 @@ CMD ["/lib/systemd/systemd"]
 
 # Image metadata
 LABEL org.label-schema.vendor="Mesaguy" \
-      org.label-schema.name="Ubuntu Linux 20.10 (Groovy Gorilla) boot" \
-      org.label-schema.description="Image boots Ubuntu Linux 20.10 (Groovy Gorilla) via systemd" \
+      org.label-schema.name="Ubuntu Linux 21.04 (Hirsute Hippo) boot" \
+      org.label-schema.description="Image boots Ubuntu Linux 21.04 (Hirsute Hippo) via systemd" \
       com.mesaguy.operatingsystem.eol="false"
