@@ -1,5 +1,5 @@
 # Source
-FROM archlinux:base-20210124.0.14185
+FROM archlinux:base
 
 # Update repo definitions and packages
 RUN pacman -Syu --noconfirm && \
